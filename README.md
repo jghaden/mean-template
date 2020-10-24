@@ -16,7 +16,7 @@ This template was created to act as a quick spring board or boiler plate to quic
 $ npm install
 ```
 
-- Enter your own MongoDB configuration settings in the server.js file:
+- Enter your own MongoDB configuration settings in the [server.js](/server.js)
 
 ```
 mongoose.connect('mongodb://localhost:27017/mean-template', { useNewUrlParser:  true, useUnifiedTopology:  true, useCreateIndex:  true }, function(err) {
@@ -43,7 +43,7 @@ var  client = nodemailer.createTransport({
 });
 ```
 
-- You must also update all e-mail callbacks (links that users click for e-mail activation/password reset, etc.) found in the api.js file:
+- Update all email callbacks in the [api.js](/app/routes/api.js)
 
 ```
 var  email = {
