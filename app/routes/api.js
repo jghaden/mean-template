@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 var secret       = 'token_secret';
 
 module.exports = function(router) {
+    // SENSITIVE
     var client = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
