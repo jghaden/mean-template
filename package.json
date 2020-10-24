@@ -1,7 +1,7 @@
 {
   "name": "mean-template",
   "version": "1.0.0",
-  "description": "MEAN/Bootstrap template with user authentication",
+  "description": "SPA MEAN/Bootstrap template with RESTful API",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
