@@ -66,12 +66,14 @@ var UserSchema = new Schema({
     temporarytoken: { type: String, required: true },
     resettoken:     { type: String, required: false },
 
-    profession:     { type: String, required: false, default: 'N/A' },
-    location:       { type: String, required: false, default: 'N/A' },
-    
-    website:        { type: String, required: false, default: 'N/A' },
-    github:         { type: String, required: false, default: 'N/A' },
-    linkedin:       { type: String, required: false, default: 'N/A' }
+    social:         {
+        profession:     { type: String, required: false, default: 'N/A' },
+        location:       { type: String, required: false, default: 'N/A' },
+        
+        website:        { type: String, required: false, default: 'N/A' },
+        github:         { type: String, required: false, default: 'N/A' },
+        linkedin:       { type: String, required: false, default: 'N/A' }
+    }
 });
 
 UserSchema.pre('save', function(next) {

@@ -375,7 +375,7 @@ module.exports = function(router) {
     // User Profile Route
     // http://localhost:8080/api/profile/username
     router.get('/profile/:username', function(req, res) {
-        User.findOne({ username: req.params.username }).select('name username email created profession location website github linkedin')
+        User.findOne({ username: req.params.username }).select('name username email created social')
             .exec(function(err, user) {
                 if(err) throw err;
 

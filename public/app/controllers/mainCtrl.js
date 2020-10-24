@@ -15,12 +15,12 @@ angular.module('mainController', ['authServices'])
                         Auth.getProfile(app.username)
                             .then(function(data) {
                                 if(data.data.success) {
-                                    app.name = data.data.user.name;
-                                    app.profession = data.data.user.profession;
-                                    app.location = data.data.user.location;
-                                    app.website = data.data.user.website;
-                                    app.github = data.data.user.github;
-                                    app.linkedin = data.data.user.linkedin;
+                                    app.name       = data.data.user.name;
+                                    app.profession = data.data.user.social.profession;
+                                    app.location   = data.data.user.social.location;
+                                    app.website    = data.data.user.social.website;
+                                    app.github     = data.data.user.social.github;
+                                    app.linkedin   = data.data.user.social.linkedin;
 
                                     var date = new Date(data.data.user.created);
                                     app.created = date.toUTCString();
@@ -35,13 +35,6 @@ angular.module('mainController', ['authServices'])
 
             app.loaded = true;
         });
-
-        this.getProfile = function(userData) {
-            Auth.getProfile(userData)
-                .then(function(data) {
-                    console.log(data);
-                })
-        }
 
         this.doLogin = function(loginData) {
             app.loading = true;
