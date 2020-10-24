@@ -20,7 +20,7 @@ $ npm install
 
 - Enter your own MongoDB configuration settings in the [server.js](/server.js)
 
-```
+```js
 mongoose.connect('mongodb://localhost:27017/mean-template', { useNewUrlParser:  true, useUnifiedTopology:  true, useCreateIndex:  true }, function(err) {
 	if(err) {
 		console.log('Not connected to MongoDB: ' + err);
@@ -33,7 +33,7 @@ mongoose.connect('mongodb://localhost:27017/mean-template', { useNewUrlParser:  
 
 - If you are using Gmail SMTP, adjust the email client parameters in [api.js](/app/routes/api.js)
 
-```
+```js
 var  client = nodemailer.createTransport({
 	host:  'smtp.gmail.com',
 	port:  587,
@@ -47,7 +47,7 @@ var  client = nodemailer.createTransport({
 
 - Update all email callbacks in the [api.js](/app/routes/api.js)
 
-```
+```js
 var  email = {
 	from:  'MEAN Template, username@gmail.com',
 	to:  user.email,
