@@ -25,7 +25,7 @@ module.exports = function(router) {
         user.username       = req.body.username;
         user.password       = req.body.password;
         user.email          = req.body.email;
-        user.temporarytoken = jwt.sign({ name: user.name, username: user.username, email: user.email }, secret, { expiresIn: '24h' });
+        user.temporarytoken = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h' });
     
         if(user.name == null || user.name == '' || user.username == null || user.username == '' ||
            user.password == null || user.password == '' || user.email == null || user.email == '') {
@@ -203,7 +203,7 @@ module.exports = function(router) {
             .exec(function(err, user) {
                 if(err) throw err;
 
-                user.temporarytoken = jwt.sign({ name: user.name, username: user.username, email: user.email }, secret, { expiresIn: '24h' });
+                user.temporarytoken = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h' });
 
                 user.save(function(err) {
                     if(err) {
@@ -369,6 +369,21 @@ module.exports = function(router) {
                         }
                     });
                 }  
+            });
+    });
+
+    // User Profile Route
+    // http://localhost:8080/api/profile/username
+    router.get('/profile/:username', function(req, res) {
+        User.findOne({ username: req.params.username }).select('name username email created profession location website github linkedin')
+            .exec(function(err, user) {
+                if(err) throw err;
+
+                if(!user) {
+                    res.json({ success: false, message: 'An account with that username was not found.'} );
+                } else {
+                    res.json({ success: true, user: user });
+                }
             });
     });
 

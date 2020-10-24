@@ -11,6 +11,21 @@ angular.module('mainController', ['authServices'])
                     .then(function(data) {
                         app.username = data.data.username;
                         app.email = data.data.email;
+
+                        Auth.getProfile(app.username)
+                            .then(function(data) {
+                                if(data.data.success) {
+                                    app.name = data.data.user.name;
+                                    app.profession = data.data.user.profession;
+                                    app.location = data.data.user.location;
+                                    app.website = data.data.user.website;
+                                    app.github = data.data.user.github;
+                                    app.linkedin = data.data.user.linkedin;
+
+                                    var date = new Date(data.data.user.created);
+                                    app.created = date.toUTCString();
+                                }
+                            });
                     });
             } else {
                 app.isLoggedIn = false;
@@ -20,6 +35,13 @@ angular.module('mainController', ['authServices'])
 
             app.loaded = true;
         });
+
+        this.getProfile = function(userData) {
+            Auth.getProfile(userData)
+                .then(function(data) {
+                    console.log(data);
+                })
+        }
 
         this.doLogin = function(loginData) {
             app.loading = true;

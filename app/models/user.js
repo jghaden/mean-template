@@ -64,7 +64,14 @@ var UserSchema = new Schema({
     created:        { type: Date, default: Date.now },
     active:         { type: Boolean, required: true, default: false },
     temporarytoken: { type: String, required: true },
-    resettoken:     { type: String, required: false }
+    resettoken:     { type: String, required: false },
+
+    profession:     { type: String, required: false, default: 'N/A' },
+    location:       { type: String, required: false, default: 'N/A' },
+    
+    website:        { type: String, required: false, default: 'N/A' },
+    github:         { type: String, required: false, default: 'N/A' },
+    linkedin:       { type: String, required: false, default: 'N/A' }
 });
 
 UserSchema.pre('save', function(next) {

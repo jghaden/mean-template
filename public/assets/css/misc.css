@@ -6,6 +6,10 @@
     margin: 1.5em 0 2em 0;
 }
 
+.profile-body {
+    margin: 2em 0 2em 0;
+}
+
 .state-valid {
     color: #28a745;
 }
