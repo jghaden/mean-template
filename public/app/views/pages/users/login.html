@@ -1,0 +1,40 @@
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+        <div class="page-header  text-center">
+            <h1 class="display-4">User Login</h1>
+        </div>
+        
+        <form ng-submit="main.doLogin(loginData);">
+            <label><strong>Username:</strong></label>
+            <input class="form-control" type="text" name="username" placeholder="Username" ng-model="main.loginData.username" ng-disabled="main.disabled">
+            <br>
+            <label><strong>Password:</strong></label>
+            <input class="form-control" type="password" name="password" placeholder="Password" ng-model="main.loginData.password" ng-disabled="main.disabled">
+            <br>
+            <button class="btn btn-primary" type="submit" ng-disabled="main.disabled">Login</button>&nbsp
+            <!-- <a href="/auth/facebook" target="_blank"><button type="button" class="btn btn-success">Facebook</button></a> -->
+            <div class="group-forgot">
+                <a href="/resetusername"><button class="btn btn-outline-secondary" type="submit" ng-disabled="main.disabled">Forgot Username</button></a>
+                <a href="/resetpassword"><button class="btn btn-outline-secondary" type="submit" ng-disabled="main.disabled">Forgot Password</button></a>
+            </div>
+        </form>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="main.loading">
+            <div class="alert alert-secondary">Loading...</div>
+        </div>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="main.successMsg">
+            <div class="alert alert-success">{{ main.successMsg }}</div>
+        </div>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="main.errorMsg">
+            <div class="alert alert-danger">{{ main.errorMsg }}&nbsp<a href="/resend" ng-show="main.expired"><button class="btn btn-success" type="submit">Resend Activation Link</button></a></div>
+        </div>
+    </div>
+</div>

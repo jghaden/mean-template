@@ -1,0 +1,15 @@
+.group-forgot {
+    float: right;
+}
+
+.page-header {
+    margin: 1.5em 0 2em 0;
+}
+
+.state-valid {
+    color: #28a745;
+}
+
+.state-invalid {
+    color: #dc3545;
+}
