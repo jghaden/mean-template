@@ -11,6 +11,8 @@ This application requires installation of NodeJS and MongoDB prior to running.
 
 This template was created to act as a quick spring board or boiler plate to quickly build web applications.
 
+The application implements user login, registration, and authentication. However, users can only proceed after accepting a confirmation email sent with [Nodemailer](https://nodemailer.com/about/) configured using Gmail SMTP.
+
 ## Installation
 ```
 $ npm install
