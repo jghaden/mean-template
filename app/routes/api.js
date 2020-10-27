@@ -1,4 +1,5 @@
 const User       = require('../models/user');
+const Item       = require('../models/item');
 const jwt        = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 var secret       = 'token_secret';
@@ -27,8 +28,7 @@ module.exports = function(router) {
         user.email          = req.body.email;
         user.temporarytoken = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h' });
     
-        if(user.name == null || user.name == '' || user.username == null || user.username == '' ||
-           user.password == null || user.password == '' || user.email == null || user.email == '') {
+        if(user.name == null || user.name == '' || user.username == null || user.username == '' || user.password == null || user.password == '' || user.email == null || user.email == '') {
             res.json({ success: false, message: 'Email, username, or password were not provided.' });
         } else {
             user.save(function(err) {
@@ -77,6 +77,8 @@ module.exports = function(router) {
         }
     });
 
+    // Check Username Route
+    // http://localhost:8080/api/checkusername
     router.post('/checkusername', function(req, res) {
         User.findOne({ username: req.body.username }).select('username')
             .exec(function(err, user) {
@@ -88,9 +90,10 @@ module.exports = function(router) {
                     res.json({ success: true, message: 'Valid username' });
                 }
             });
-                
     });
 
+    // Check Email Route
+    // http://localhost:8080/api/checkemail
     router.post('/checkemail', function(req, res) {
         User.findOne({ email: req.body.email }).select('email')
             .exec(function(err, user) {
@@ -387,6 +390,7 @@ module.exports = function(router) {
             });
     });
 
+    // Middleware for token
     router.use(function(req, res, next) {
         var token = req.body.token || req.body.query || req.headers['x-access-token'];
 
@@ -408,6 +412,89 @@ module.exports = function(router) {
     // http://localhost:8080/api/me
     router.post('/me', function(req, res) {
         res.send(req.decoded);
+    });
+
+    // Item Creation Route
+    // http://localhost:8080/api/items/create
+    router.post('/items/create', function(req, res) {
+        var item = new Item();
+
+        item.part            = req.body.part;
+        item.quanity         = req.body.quanity;
+        item.category        = req.body.category;
+        item.description     = req.body.description;
+        item.url             = req.body.url;
+
+        if(item.part == null || item.part == '' || item.quanity == null || item.quanity == '' || item.category == null || item.category == '' || item.description == null || item.description == '' || item.url == null || item.url == '') {
+            res.json({ success: false, message: 'Part, quanity, category, description, or URL were not provided.' });
+        } else {
+            User.findOne({username: req.decoded.username }).select('id username')
+                .exec(function(err, user) {
+                    if(err) throw err;
+
+                    if(!user) {
+                        res.json({ success: false, message: 'User ownership could not be made.'} );
+                    } else {
+                        item.owner.id = user._id;
+                        item.owner.username = user.username;
+
+                        item.save(function(err) {
+                            if(err) {
+                                if(err.errors != null) {
+                                    if(err.errors.part) {
+                                        res.json({ success: false, message: err.errors.part.message });
+                                    } else if(err.errors.quanity) {
+                                        res.json({ success: false, message: err.errors.quanity.message });
+                                    } else if(err.errors.category) {
+                                        res.json({ success: false, message: err.errors.category.message });
+                                    } else if(err.errors.description) {
+                                        res.json({ success: false, message: err.errors.description.message });
+                                    } else if(err.errors.url) {
+                                        res.json({ success: false, message: err.errors.url.message });
+                                    } else {
+                                        res.json({ success: false, message: err });
+                                    }
+                                } else if(err) {
+                                    if(err.code == 11000) {
+                                        res.json({ success: false, message: 'Item already in database.' });
+                                    } else {
+                                        res.json({ success: false, message: err });
+                                    }
+                                }
+                            } else {
+                                res.json({ success: true, message: 'Item has been added to the database.' });
+                            }
+                        });
+                    }
+            });      
+        }
+    });
+
+    // Check Part Route
+    // http://localhost:8080/api/checkpart
+    router.post('/checkpart', function(req, res) {
+        Item.findOne({ part: req.body.part }).select('part')
+            .exec(function(err, user) {
+                if(err) throw err;
+
+                if(user) {
+                    res.json({ success: false, message: 'That part is already in the database' });
+                } else {
+                    res.json({ success: true, message: 'Part name is valid' });
+                }
+            });
+    });
+
+    router.get('/permission', function(req, res) {
+        User.findOne({ username: req.decoded.username }, function(err, user) {
+            if (err) throw err;
+
+            if(!user) {
+                res.json({ success: false, message: 'No user was found'});
+            } else {
+                res.json({ success: true, permission: user.permission });
+            }
+        });
     });
 
     return router;

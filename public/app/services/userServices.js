@@ -41,6 +41,10 @@ angular.module('userServices', [])
         userFactory.savePassword = function(regData) {
             return $http.put('/api/savepassword', regData);
         };
+        
+        userFactory.getPermission = function() {
+            return $http.get('/api/permission');
+        };
 
         return userFactory;
     });

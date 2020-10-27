@@ -33,10 +33,13 @@
     <script src="app/controllers/userCtrl.js"></script>
     <script src="app/controllers/mainCtrl.js"></script>
     <script src="app/controllers/emailCtrl.js"></script>
+    <script src="app/controllers/manageCtrl.js"></script>
+    <script src="app/controllers/itemCtrl.js"></script>
 
     <!-- Angular Services -->
     <script src="app/services/userServices.js"></script>
     <script src="app/services/authServices.js"></script>
+    <script src="app/services/itemServices.js"></script>
 
     <title>MEAN</title>
   </head>
@@ -61,11 +64,26 @@
           <li class="nav-item">
             <a class="nav-link" href="/register" ng-show="!main.isLoggedIn">Register</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" ng-click="main.logout();" ng-show="main.isLoggedIn">Logout</a>
+
+          <li class="nav-item dropdown" ng-show="main.isLoggedIn">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Items
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="items/create">Create</a>
+              <a class="dropdown-item" href="items/view">View</a>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/profile" ng-show="main.isLoggedIn" style="position: fixed; right: 0;">Hello, <strong>{{ main.username }}</strong></a>
+
+          <li class="nav-item dropdown" ng-show="main.isLoggedIn" style="position: fixed; right: 0;">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Hello, <strong>{{ main.username }}</strong>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/profile">Profile</a>
+              <a class="dropdown-item" href="/manage" ng-show="main.authorized">Manage</a>
+              <a class="dropdown-item" href="#" ng-click="main.logout();">Logout</a>
+            </div>
           </li>
         </ul>
       </div>

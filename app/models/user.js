@@ -63,6 +63,8 @@ var UserSchema = new Schema({
     email:          { type: String, required: true, unique: true, lowercase: true, validate: emailValidator },
     created:        { type: Date, default: Date.now },
     active:         { type: Boolean, required: true, default: false },
+    permission:     { type: String, required: true, default: 'user'},
+    
     temporarytoken: { type: String, required: true },
     resettoken:     { type: String, required: false },
 
