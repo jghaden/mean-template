@@ -41,9 +41,21 @@ angular.module('userServices', [])
         userFactory.savePassword = function(regData) {
             return $http.put('/api/savepassword', regData);
         };
+
+        userFactory.getProfile = function(username) {
+            return $http.get('/api/profile/' + username);
+        }
         
         userFactory.getPermission = function() {
             return $http.get('/api/permission');
+        };
+
+        userFactory.getUsers = function() {
+            return $http.get('/api/manage');
+        };
+        
+        userFactory.deleteUser = function(username) {
+            return $http.delete('/api/manage/' + username);
         };
 
         return userFactory;

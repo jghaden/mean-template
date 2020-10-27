@@ -5,10 +5,6 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/home.html'
             })
 
-            .when('/about', {
-                templateUrl: 'app/views/pages/about.html'
-            })
-
             .when('/register', {
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
@@ -25,9 +21,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true
             })
 
-            .when('/profile', {
+            .when('/profile/:username', {
                 templateUrl: 'app/views/pages/users/profile.html',
-                authenticated: true
+                controller: 'profileCtrl',
+                controllerAs: 'profile'
             })
 
             .when('/activate/:token', {
@@ -74,14 +71,22 @@ var app = angular.module('appRoutes', ['ngRoute'])
 
             .when('/items/view', {
                 templateUrl: 'app/views/pages/items/view.html',
-                controller: 'itemCtrl',
-                controllerAs: 'item'
+                controller: 'itemViewCtrl',
+                controllerAs: 'itemView'
             })
 
-            .when('/manage', {
-                templateUrl: 'app/views/pages/manage/manage.html',
+            .when('/manage/users', {
+                templateUrl: 'app/views/pages/manage/users/manage.html',
                 controller: 'manageCtrl',
                 controllerAs: 'manage',
+                authenticated: true,
+                permission: ['admin', 'moderator']
+            })
+
+            .when('/manage/users/edit/:id', {
+                templateUrl: 'app/views/pages/manage/users/edit.html',
+                controller: 'editCtrl',
+                controllerAs: 'edit',
                 authenticated: true,
                 permission: ['admin', 'moderator']
             })

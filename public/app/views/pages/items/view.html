@@ -1,15 +1,42 @@
 <div class="row d-flex justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="page-header  text-center">
             <h1 class="display-4">View Items</h1>
         </div>
 
-        <div class="item-list">
-            <ul>
-                <li ng-repeat="item in items">
-                    A
-                </li>
-            </ul>
+        <div class="row show-hide-message" ng-show="itemView.loading">
+            <div class="alert alert-secondary">Loading...</div>
+        </div>
+        
+        <br>
+
+        <div class="panel panel-primary">
+            <table class="table">
+                <tr>
+                    <th>Part</th>
+                    <th>Quanity</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>URL</th>
+                </tr>
+                <tr ng-repeat="item in itemView.items">
+                    <td>{{ item.part }}</td>
+                    <td>{{ item.quanity }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.url }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="row show-hide-message" ng-show="itemView.successMsg">
+            <div class="alert alert-success">{{ itemView.successMsg }}</div>
+        </div>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="itemView.errorMsg">
+            <div class="alert alert-danger">{{ itemView.errorMsg }}</div>
         </div>
     </div>  
 </div>  

@@ -1,0 +1,51 @@
+<div>
+    <div>
+        <div class="page-header  text-center">
+            <h1 class="display-4">User Management</h1>
+        </div>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="manage.loading">
+            <div class="alert alert-secondary">Loading...</div>
+        </div>
+        
+        <br>
+
+        <div class="panel panel-primary">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>Created</th>
+                </tr>
+                <tr ng-repeat="person in manage.users | limitTo: manage.limit">
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.username }}</td>
+                    <td>{{ person.email }}</td>
+                    <td>{{ person.active }}</td>
+                    <td>{{ person.created }}</td>
+
+                    <td>
+                        <a href="/manage/users/edit/{{ person._id }}">
+                            <button type="button" class="btn btn-primary" ng-show="manage.editAccess">Edit</button>
+                        </a>
+                        <button type="button" class="btn btn-danger" ng-show="manage.deleteAccess" ng-click="manage.deleteUser(person.username);">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="row show-hide-message" ng-show="manage.successMsg">
+            <div class="alert alert-success">{{ manage.successMsg }}</div>
+        </div>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="manage.errorMsg">
+            <div class="alert alert-danger">{{ manage.errorMsg }}</div>
+        </div>
+    </div>
+</div>

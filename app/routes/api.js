@@ -383,11 +383,23 @@ module.exports = function(router) {
                 if(err) throw err;
 
                 if(!user) {
-                    res.json({ success: false, message: 'An account with that username was not found.'} );
+                    res.json({ success: false, message: 'An account with that username was not found.' + req.params.username } );
                 } else {
                     res.json({ success: true, user: user });
                 }
             });
+    });
+
+    router.get('/items', function(req, res) {
+        Item.find({}, function(err, items) {
+            if(err) throw err;
+
+            if(!items) {
+                res.json({ success: false, message: 'Items were not found' });
+            } else {
+                res.json({ success: true, items: items });
+            }
+        });
     });
 
     // Middleware for token
@@ -414,6 +426,21 @@ module.exports = function(router) {
         res.send(req.decoded);
     });
 
+    // Check Part Route
+    // http://localhost:8080/api/checkpart
+    router.post('/checkpart', function(req, res) {
+        Item.findOne({ part: req.body.part }).select('part')
+            .exec(function(err, item) {
+                if(err) throw err;
+
+                if(item) {
+                    res.json({ success: false, message: 'That part is already in the database' });
+                } else {
+                    res.json({ success: true, message: 'Part name is valid' });
+                }
+            });
+    });
+
     // Item Creation Route
     // http://localhost:8080/api/items/create
     router.post('/items/create', function(req, res) {
@@ -425,8 +452,8 @@ module.exports = function(router) {
         item.description     = req.body.description;
         item.url             = req.body.url;
 
-        if(item.part == null || item.part == '' || item.quanity == null || item.quanity == '' || item.category == null || item.category == '' || item.description == null || item.description == '' || item.url == null || item.url == '') {
-            res.json({ success: false, message: 'Part, quanity, category, description, or URL were not provided.' });
+        if(item.part == null || item.part == '' || item.quanity == null || item.quanity == '' || item.category == null || item.category == '') {
+            res.json({ success: false, message: 'Part, quanity, category or were not provided.' });
         } else {
             User.findOne({username: req.decoded.username }).select('id username')
                 .exec(function(err, user) {
@@ -470,21 +497,6 @@ module.exports = function(router) {
         }
     });
 
-    // Check Part Route
-    // http://localhost:8080/api/checkpart
-    router.post('/checkpart', function(req, res) {
-        Item.findOne({ part: req.body.part }).select('part')
-            .exec(function(err, user) {
-                if(err) throw err;
-
-                if(user) {
-                    res.json({ success: false, message: 'That part is already in the database' });
-                } else {
-                    res.json({ success: true, message: 'Part name is valid' });
-                }
-            });
-    });
-
     router.get('/permission', function(req, res) {
         User.findOne({ username: req.decoded.username }, function(err, user) {
             if (err) throw err;
@@ -494,6 +506,52 @@ module.exports = function(router) {
             } else {
                 res.json({ success: true, permission: user.permission });
             }
+        });
+    });
+
+    router.get('/manage', function(req, res) {
+        User.find({}, function(err, users) {
+            if(err) throw err;
+
+            User.findOne({ username: req.decoded.username }, function(err, mainUser) {
+                if(err) throw err;
+
+                if(!mainUser) {
+                    res.json({ success: false, message: 'No user was found' });
+                } else {
+                    if(mainUser.permission == 'admin' || mainUser.permission == 'moderator') {
+                        if(!users) {
+                            res.json({ success: false, message: 'Users were not found' });
+                        } else {
+                            res.json({ success: true, users: users, permission: mainUser.permission });
+                        }
+                    } else {
+                        res.json({ success: false, message: 'Insufficient Permissions' });
+                    }
+                }
+            })
+        });
+    });
+
+    router.delete('/manage/:username', function(req, res) {
+        var deletedUser = req.params.username;
+
+        User.findOne({ username: req.decoded.username }, function(err, mainUser) {
+            if(err) throw err;
+
+            if(!mainUser) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                if(mainUser.permission !== 'admin') {
+                    res.json({ success: false, message: 'Insufficient Permissions' });
+                } else {
+                        User.findOneAndRemove({ username: deletedUser}, function(err, user) {
+                            if(err) throw err;
+
+                            res.json({ success: true });
+                        });
+                    }
+                }
         });
     });
 

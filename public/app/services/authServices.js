@@ -26,14 +26,6 @@ angular.module('authServices', [])
             }
         }
 
-        authFactory.getProfile = function(userData) {
-            if(AuthToken.getToken()) {
-                return $http.get('/api/profile/' + userData);
-            } else {
-                $q.reject({ message: 'User has no token' });
-            }
-        }
-
         authFactory.logout = function() {
             AuthToken.setToken();
         }

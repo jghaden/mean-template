@@ -30,12 +30,12 @@
             </select>
             <br>
             <label><strong>Description:</strong></label>
-            <input class="form-control" type="text" name="description" placeholder="7-Segment Display" ng-model="item.itemData.description" required
+            <input class="form-control" type="text" name="description" placeholder="7-Segment Display" ng-model="item.itemData.description"
                 ng-class="{ 'is-valid': (itemForm.description.$valid && !itemForm.description.$pristine), 'is-invalid': (!itemForm.description.$valid && !itemForm.description.$pristine)}"
                 ng-disabled="item.disabled">
             <br>
             <label><strong>URL:</strong></label>
-            <input class="form-control" type="url" name="url" placeholder="URL" ng-model="item.itemData.url" required
+            <input class="form-control" type="url" name="url" placeholder="URL" ng-model="item.itemData.url"
                 ng-class="{ 'is-valid': (itemForm.url.$valid && !itemForm.url.$pristine), 'is-invalid': (!itemForm.url.$valid && !itemForm.url.$pristine)}"
                 ng-disabled="item.disabled">
             <br>

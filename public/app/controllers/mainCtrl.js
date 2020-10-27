@@ -20,21 +20,6 @@ angular.module('mainController', ['authServices'])
                                     
                                 }
                             })
-
-                        Auth.getProfile(app.username)
-                            .then(function(data) {
-                                if(data.data.success) {
-                                    app.name       = data.data.user.name;
-                                    app.profession = data.data.user.social.profession;
-                                    app.location   = data.data.user.social.location;
-                                    app.website    = data.data.user.social.website;
-                                    app.github     = data.data.user.social.github;
-                                    app.linkedin   = data.data.user.social.linkedin;
-
-                                    var date = new Date(data.data.user.created);
-                                    app.created = date.toUTCString();
-                                }
-                            });
                     });
             } else {
                 app.isLoggedIn = false;

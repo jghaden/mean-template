@@ -10,5 +10,9 @@ angular.module('itemServices', [])
             return $http.post('/api/checkPart', itemData);
         };
 
+        itemFactory.getItems = function() {
+            return $http.get('/api/items');
+        };
+
         return itemFactory;
     });

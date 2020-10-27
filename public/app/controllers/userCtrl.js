@@ -85,4 +85,27 @@ angular.module('userControllers', ['userServices'])
                 });
             }
         }
-    });
+    })
+
+    .controller('profileCtrl', function(User, $route) {
+        var app = this;
+
+        User.getProfile($route.current.params.username)
+            .then(function(data) {
+
+                if(data.data.success) {
+                    app.name       = data.data.user.name;
+                    app.username   = data.data.user.username;
+                    app.email      = data.data.user.email;
+
+                    app.profession = data.data.user.social.profession;
+                    app.location   = data.data.user.social.location;
+                    app.website    = data.data.user.social.website;
+                    app.github     = data.data.user.social.github;
+                    app.linkedin   = data.data.user.social.linkedin;
+
+                    var date = new Date(data.data.user.created);
+                    app.created = date.toUTCString();
+                }
+            });
+    })

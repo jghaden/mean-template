@@ -50,3 +50,25 @@ angular.module('itemController', ['authServices'])
                 });
         }     
     })
+
+    .controller('itemViewCtrl', function(Item) {
+        var app = this;
+
+        app.loading = true;
+
+        function getItems() {
+            Item.getItems()
+            .then(function(data) {
+                if(data.data.success) {
+                    app.items = data.data.items;
+
+                    app.loading = false;
+                } else {
+                    app.loading = false;
+                    app.errorMsg = data.data.message;
+                }
+            });
+        }
+
+        getItems();
+    })
