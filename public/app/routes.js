@@ -105,7 +105,7 @@ app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $
             if(next.$$route.authenticated === true) {
                 if(!Auth.isLoggedIn()) {
                     event.preventDefault();
-                    $location.path('/');
+                    $location.path('/login');
                 } else if (next.$$route.permission) {
                     User.getPermission()
                         .then(function(data) {
@@ -116,14 +116,8 @@ app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $
                                 }
                             }
                         });
-
                 }
-            } else if (next.$$route.authenticated === false) {
-                if(Auth.isLoggedIn()) {
-                    event.preventDefault();
-                    $location.path('/profile');
-                }
-            }
+            } 
         }
     });
 }]);
