@@ -383,7 +383,7 @@ module.exports = function(router) {
                 if(err) throw err;
 
                 if(!user) {
-                    res.json({ success: false, message: 'An account with that username was not found.' + req.params.username } );
+                    res.json({ success: false, message: 'An account with that username was not found.' } );
                 } else {
                     res.json({ success: true, user: user });
                 }

@@ -87,12 +87,11 @@ angular.module('userControllers', ['userServices'])
         }
     })
 
-    .controller('profileCtrl', function(User, $route) {
+    .controller('profileCtrl', function(User, $route, $location) {
         var app = this;
 
         User.getProfile($route.current.params.username)
             .then(function(data) {
-
                 if(data.data.success) {
                     app.name       = data.data.user.name;
                     app.username   = data.data.user.username;
@@ -106,6 +105,9 @@ angular.module('userControllers', ['userServices'])
 
                     var date = new Date(data.data.user.created);
                     app.created = date.toUTCString();
+                } else {
+                    // Redirect to home path if user profile is not found
+                    $location.path('/')
                 }
             });
     })
