@@ -1,5 +1,5 @@
 <div class="row d-flex justify-content-center">
-    <div class="col-md-12">
+    <div>
         <div class="page-header  text-center">
             <h1 class="display-4">View Items</h1>
         </div>
@@ -11,21 +11,28 @@
         <br>
 
         <div class="panel panel-primary">
-            <table class="table">
-                <tr>
-                    <th>Part</th>
-                    <th>Quanity</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>URL</th>
-                </tr>
-                <tr ng-repeat="item in itemView.items">
-                    <td>{{ item.part }}</td>
-                    <td>{{ item.quanity }}</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.url }}</td>
-                </tr>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Part</th>
+                        <th>Quanity</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>URL</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in itemView.items">
+                        <td>{{ item.part }}</td>
+                        <td>{{ item.quanity }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.description }}</td>
+                        <td><a href="{{ item.url }}" target="_blank">{{ item.url }}</a></td>
+
+                        <td style="display: flex;"><i class="fas fa-eye"></i><i class="fas fa-edit"></i><i class="fas fa-trash"></i></td>                   
+                    </tr>
+                </tbody>
             </table>
         </div>
         
