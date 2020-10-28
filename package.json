@@ -4,8 +4,9 @@
   "description": "SPA MEAN/Bootstrap template with RESTful API",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node",
+    "compile-css": "node-sass -w src/sass -o public/assets/css",
+    "dev": "nodemon"
   },
   "keywords": [
     "MEAN",
@@ -29,5 +30,8 @@
     "mongoose-validator": "^2.1.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.4.14"
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1"
   }
 }
