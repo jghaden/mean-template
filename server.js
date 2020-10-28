@@ -18,9 +18,7 @@ app.use('/api', appRoutes);
 //
 
 // Database Connection
-//mongoose.connect('mongodb://localhost:27017/electronics-inventory', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, function(err) {
-// SENSITIVE
-mongoose.connect('mongodb+srv://root:zKPQtx0msSnQitf0@cluster0.9chsv.mongodb.net/mean-template', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, function(err) {
+mongoose.connect('mongodb://localhost:27017/mean-template', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, function(err) {
     if(err) {
         console.log('Not connected to MongoDB: ' + err);
         throw err;
