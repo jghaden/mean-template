@@ -69,7 +69,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 authenticated: true
             })
 
-            .when('/items/view', {
+            .when('/items/view/list', {
+                templateUrl: 'app/views/pages/items/list.html',
+                controller: 'itemListCtrl',
+                controllerAs: 'itemList'
+            })
+
+            .when('/items/view/:part', {
                 templateUrl: 'app/views/pages/items/view.html',
                 controller: 'itemViewCtrl',
                 controllerAs: 'itemView'

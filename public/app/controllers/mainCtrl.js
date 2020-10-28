@@ -16,8 +16,6 @@ angular.module('mainController', ['authServices'])
                             .then(function(data) {
                                 if(data.data.permission == 'admin' || data.data.permission == 'moderator') {
                                     app.authorized = true;
-                                } else {
-                                    
                                 }
                             })
                     });
@@ -66,7 +64,7 @@ angular.module('mainController', ['authServices'])
 
             $location.path('/logout');
             $timeout(function() {
-                $location.path('/');
+                $location.path('/login');
             }, 1000);
         }
     });

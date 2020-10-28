@@ -390,6 +390,8 @@ module.exports = function(router) {
             });
     });
 
+    // Item List Route
+    // http://localhost:8080/api/items
     router.get('/items', function(req, res) {
         Item.find({}, function(err, items) {
             if(err) throw err;
@@ -400,6 +402,21 @@ module.exports = function(router) {
                 res.json({ success: true, items: items });
             }
         });
+    });
+
+    // Item View Route
+    // http://localhost:8080/api/item/item_part
+    router.get('/item/:part', function(req, res) {
+        Item.findOne({ part: req.params.part }).select('part quanity category note url owner created')
+            .exec(function(err, item) {
+                if(err) throw err;
+
+                if(!item) {
+                    res.json({ success: false, message: 'An item with that Part name was not found' });
+                } else {
+                    res.json({ success: true, item: item, data: item.created });
+                }
+            });
     });
 
     // Middleware for token
@@ -446,11 +463,11 @@ module.exports = function(router) {
     router.post('/items/create', function(req, res) {
         var item = new Item();
 
-        item.part            = req.body.part;
-        item.quanity         = req.body.quanity;
-        item.category        = req.body.category;
-        item.description     = req.body.description;
-        item.url             = req.body.url;
+        item.part     = req.body.part;
+        item.quanity  = req.body.quanity;
+        item.category = req.body.category;
+        item.note     = req.body.note;
+        item.url      = req.body.url;
 
         if(item.part == null || item.part == '' || item.quanity == null || item.quanity == '' || item.category == null || item.category == '') {
             res.json({ success: false, message: 'Part, quanity, category or were not provided.' });
@@ -474,8 +491,8 @@ module.exports = function(router) {
                                         res.json({ success: false, message: err.errors.quanity.message });
                                     } else if(err.errors.category) {
                                         res.json({ success: false, message: err.errors.category.message });
-                                    } else if(err.errors.description) {
-                                        res.json({ success: false, message: err.errors.description.message });
+                                    } else if(err.errors.note) {
+                                        res.json({ success: false, message: err.errors.note.message });
                                     } else if(err.errors.url) {
                                         res.json({ success: false, message: err.errors.url.message });
                                     } else {

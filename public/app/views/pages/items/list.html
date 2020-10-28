@@ -1,0 +1,64 @@
+<div class="row d-flex justify-content-center">
+    <div>
+        <div class="page-header text-center">
+            <h1 class="display-4">View Items</h1>
+        </div>
+
+        <div class="row show-hide-message" ng-show="itemList.loading">
+            <div class="alert alert-secondary">Loading...</div>
+        </div>
+
+        <div class="row show-hide-message" ng-show="itemList.successMsg">
+            <div class="alert alert-success">{{ itemList.successMsg }}</div>
+        </div>   
+        
+        <div class="row show-hide-message" ng-show="itemList.errorMsg">
+            <div class="alert alert-danger">{{ itemList.errorMsg }}</div>
+        </div>
+
+        <div class="modal fade" id="deleteItemModal" tabindex="-1" aria-labelledby="deleteItemModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteItemModalLabel">Delete Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                            <div class="modal-body">
+                                Are you sure you wish to delete <a href="/items/view/{{ itemList.deleteItem }}" target="_blank">{{ itemList.deleteItem }}</a>?
+                            </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="col-part">Part</th>
+                    <th class="col-category text-center">Category</th>
+                    <th class="col-quanity text-center">Quanity</th>
+                    <th class="col-note">Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in itemList.items" ng-mouseenter="itemList.rowHover(item._id, true)" ng-mouseleave="itemList.rowHover(item._id, false)" ng-dblclick="itemList.viewItem(item.part)">
+                    <td class="col-part">{{ item.part }}</td>
+                    <td class="col-category text-center">{{ item.category }}</td>
+                    <td class="col-quanity text-center">{{ item.quanity }}</td>
+                    <td class="col-note">{{ item.note }}
+                        <div class="col-actions justify-content-right text-secondary table-actions" ng-show="itemList.row == item._id">
+                            <i class="fas fa-eye" title="View" ng-click="itemList.viewItem(item.part)"></i>
+                            <i class="fas fa-edit" title="Edit"></i>
+                            <i class="fas fa-trash" title="Remove" data-toggle="modal" data-target="#deleteItemModal" ng-click="itemList.deleteItem = item.part"></i>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  
+</div>  

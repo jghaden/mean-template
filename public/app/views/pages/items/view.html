@@ -1,49 +1,72 @@
-<div class="row d-flex justify-content-center">
-    <div>
-        <div class="page-header  text-center">
-            <h1 class="display-4">View Items</h1>
+<div class="container">
+    <div class="profile-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="http://via.placeholder.com/128" alt="Chip" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>{{ itemView.item.part }}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="my-2"><i class="fas fa-file-alt"></i> Datasheet</h6>
+                    <a href="{{ itemView.item.url }}" target="_blank"><span>View</span></a>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="my-2"><i class="fas fa-user"></i> Owner</h6>
+                    <a href="/profile/{{ itemView.item.owner.username }}" target="_blank" ng-show="itemView.item.owner.username"><span>{{ itemView.item.owner.username }}</span></a>
+                    <span class="text-secondary" ng-show="!itemView.item.owner.username">N/A</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <h6 class="mb-0">Note</h6>
+                    </div>
+                    <div class="col-sm-10 text-secondary">
+                      {{ itemView.item.note }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <h6 class="mb-0">Category</h6>
+                    </div>
+                    <div class="col-sm-10 text-secondary">
+                      {{ itemView.item.category }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <h6 class="mb-0">Quanity</h6>
+                    </div>
+                    <div class="col-sm-10 text-secondary">
+                      {{ itemView.item.quanity }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <h6 class="mb-0">Created</h6>
+                    </div>
+                    <div class="col-sm-8 text-secondary" ng-show="itemView.item.created">
+                        {{ itemView.item.created }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="row show-hide-message" ng-show="itemView.loading">
-            <div class="alert alert-secondary">Loading...</div>
-        </div>
-        
-        <br>
-
-        <div class="panel panel-primary">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Part</th>
-                        <th>Quanity</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>URL</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in itemView.items">
-                        <td>{{ item.part }}</td>
-                        <td>{{ item.quanity }}</td>
-                        <td>{{ item.category }}</td>
-                        <td>{{ item.description }}</td>
-                        <td><a href="{{ item.url }}" target="_blank">{{ item.url }}</a></td>
-
-                        <td style="display: flex;"><i class="fas fa-eye"></i><i class="fas fa-edit"></i><i class="fas fa-trash"></i></td>                   
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="row show-hide-message" ng-show="itemView.successMsg">
-            <div class="alert alert-success">{{ itemView.successMsg }}</div>
-        </div>
-        
-        <br>
-        
-        <div class="row show-hide-message" ng-show="itemView.errorMsg">
-            <div class="alert alert-danger">{{ itemView.errorMsg }}</div>
-        </div>
-    </div>  
-</div>  
+    </div>

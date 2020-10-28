@@ -1,5 +1,39 @@
+.col-part {
+    width: 20%;
+}
+
+.col-quanity, .col-category {
+    width: 10%;
+}
+
+.col-note {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .group-forgot {
     float: right;
+}
+
+.item-header h1, h5 {
+    display: inline-block;
+    margin: 0.5em 0 0 0;
+}
+
+.item-url {
+    position: relative;
+    top: 75px;
+    float: right;
+}
+
+.nav-right {
+    position: fixed;
+    right: 20px;
+}
+
+.nav-right li {
+    display: inline-block;
 }
 
 .nav-tabs li {
@@ -21,4 +55,22 @@
 
 .state-invalid {
     color: #dc3545;
+}
+
+.table-actions {
+    display: flex;
+    float: right;
+}
+
+.table-actions i {
+    margin: 0 0.5em 0 0;
+    cursor: pointer;
+}
+
+.table-actions i:hover {
+    color: black;
+}
+
+.table-filter label {
+    margin: 0 2em 0 0;
 }

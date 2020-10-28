@@ -9,9 +9,14 @@ angular.module('itemServices', [])
         itemFactory.checkPart = function(itemData) {
             return $http.post('/api/checkPart', itemData);
         };
-
+        
+        
         itemFactory.getItems = function() {
             return $http.get('/api/items');
+        };
+        
+        itemFactory.getItem = function(part) {
+            return $http.get('/api/item/' + part);
         };
 
         return itemFactory;

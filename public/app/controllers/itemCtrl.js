@@ -51,24 +51,64 @@ angular.module('itemController', ['authServices'])
         }     
     })
 
-    .controller('itemViewCtrl', function(Item) {
+    .controller('itemListCtrl', function(Item, $location) {
+        var app = this;
+
+        app.loading = true;
+        app.deleteItem = 'A';
+
+        app.viewItem = function(id) {
+            $location.path('/items/view/' + id);
+        }
+
+        app.rowHover = function(id, flag) {
+            if(flag) {
+                app.row = id;
+            } else {
+                app.row = false;
+            }
+        }
+
+        function getItems() {
+            Item.getItems()
+                .then(function(data) {
+                    if(data.data.success) {
+                        app.items = data.data.items;
+
+                        app.loading = false;
+                    } else {
+                        app.loading = false;
+                        app.errorMsg = data.data.message;
+                    }
+                });
+        }
+
+        getItems();
+    })
+
+    .controller('itemViewCtrl', function(Item, $route, $location) {
         var app = this;
 
         app.loading = true;
 
-        function getItems() {
-            Item.getItems()
-            .then(function(data) {
-                if(data.data.success) {
-                    app.items = data.data.items;
+        function getItem() {
+            Item.getItem($route.current.params.part)
+                .then(function(data) {
+                    if(data.data.success) {
+                        app.item = data.data.item;
 
-                    app.loading = false;
-                } else {
-                    app.loading = false;
-                    app.errorMsg = data.data.message;
-                }
-            });
+                        var date = new Date(data.data.item.created);
+                        app.item.created = date.toUTCString();
+                        
+                        app.loading = false;
+                    } else {
+                        app.loading = false;
+                        app.errorMsg = data.data.message;
+
+                        $location.path('/');
+                    }
+                });
         }
 
-        getItems();
+        getItem();
     })
