@@ -1,51 +1,64 @@
-<div>
+<div class="row d-flex justify-content-center">
     <div>
-        <div class="page-header  text-center">
+        <div class="page-header text-center">
             <h1 class="display-4">User Management</h1>
         </div>
-        
-        <br>
-        
+
         <div class="row show-hide-message" ng-show="manage.loading">
             <div class="alert alert-secondary">Loading...</div>
         </div>
-        
-        <br>
 
-        <div class="panel panel-primary">
-            <table class="table">
-                <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Active</th>
-                    <th>Created</th>
-                </tr>
-                <tr ng-repeat="person in manage.users | limitTo: manage.limit">
-                    <td>{{ person.name }}</td>
-                    <td>{{ person.username }}</td>
-                    <td>{{ person.email }}</td>
-                    <td>{{ person.active }}</td>
-                    <td>{{ person.created }}</td>
-
-                    <td>
-                        <a href="/manage/users/edit/{{ person._id }}">
-                            <button type="button" class="btn btn-primary" ng-show="manage.editAccess">Edit</button>
-                        </a>
-                        <button type="button" class="btn btn-danger" ng-show="manage.deleteAccess" ng-click="manage.deleteUser(person.username);">Delete</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        
         <div class="row show-hide-message" ng-show="manage.successMsg">
             <div class="alert alert-success">{{ manage.successMsg }}</div>
-        </div>
-        
-        <br>
+        </div>   
         
         <div class="row show-hide-message" ng-show="manage.errorMsg">
             <div class="alert alert-danger">{{ manage.errorMsg }}</div>
         </div>
-    </div>
-</div>
+
+        <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteUserModalLabel">Delete Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                            <div class="modal-body">
+                                Are you sure you wish to delete <a href="/profile/{{ manage.deleteUsername }}" target="_blank">{{ manage.deleteUsername }}</a>?
+                            </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="manage.deleteUser(manage.deleteUsername)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="col-name">Name</th>
+                    <th class="col-username">Username</th>
+                    <th class="col-email">Email</th>
+                    <th class="col-activated">Activated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in manage.users" ng-mouseenter="manage.rowHover(user._id, true)" ng-mouseleave="manage.rowHover(user._id, false)" ng-dblclick="manage.viewUser(user.username)">
+                    <td class="col-name">{{ user.name }}</td>
+                    <td class="col-username">{{ user.username }}</td>
+                    <td class="col-email">{{ user.email }}</td>
+                    <td class="col-activated">{{ user.active }}
+                        <div class="col-actions justify-content-right text-secondary table-actions" ng-show="manage.row == user._id">
+                            <i class="fas fa-eye" title="View" ng-click="manage.viewUser(user.username)"></i>
+                            <i class="fas fa-edit" title="Edit"></i>
+                            <i class="fas fa-trash" title="Remove" data-toggle="modal" data-target="#deleteUserModal" ng-click="manage.deleteUsername = user.username"></i>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  
+</div>  

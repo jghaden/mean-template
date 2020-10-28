@@ -1,5 +1,5 @@
 angular.module('manageController',[])
-    .controller('manageCtrl', function(User) {
+    .controller('manageCtrl', function(User, $location) {
         var app = this;
 
         app.loading = true;
@@ -7,7 +7,19 @@ angular.module('manageController',[])
         app.errorMsg = false;
         app.editAccess = false;
         app.deleteAccess = false;
-        app.limit = 10;
+        app.deleteUsername = false;
+
+        app.viewUser = function(username) {
+            $location.path('/profile/' + username);
+        }
+
+        app.rowHover = function(id, flag) {
+            if(flag) {
+                app.row = id;
+            } else {
+                app.row = false;
+            }
+        }
 
         function getUsers() {
             User.getUsers()

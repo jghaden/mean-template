@@ -55,7 +55,7 @@ angular.module('itemController', ['authServices'])
         var app = this;
 
         app.loading = true;
-        app.deleteItem = 'A';
+        app.deleteItem = false;
 
         app.viewItem = function(id) {
             $location.path('/items/view/' + id);

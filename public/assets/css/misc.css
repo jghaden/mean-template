@@ -1,3 +1,11 @@
+.col-name, .col-username, .col-email {
+    width: 300px;
+}
+
+.col-activated {
+    width: 150px;
+}
+
 .col-part {
     width: 20%;
 }
