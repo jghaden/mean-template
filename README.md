@@ -59,14 +59,18 @@ var  email = {
 }
 ```
 
-### Start server
+## Start server
+
+If you wish to have [nodemon](https://www.npmjs.com/package/nodemon) watch your code changes, run:
+
+```
+$ npm dev
+```
+
+or if you wish to simplay start the server only with Node (such as a deployed application), run:
 
 ```
 $ npm start
-```
-or
-```
-$ npm start server.js
 ```
 
 # Styling
