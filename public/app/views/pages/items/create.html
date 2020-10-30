@@ -17,8 +17,7 @@
                 ng-class="{ 'is-valid': (itemForm.quanity.$valid && !itemForm.quanity.$pristine), 'is-invalid': (!itemForm.quanity.$valid && !itemForm.quanity.$pristine)}"
                 ng-disabled="item.disabled">
             <br>
-            <label><strong>Category:</strong></label>
-            <!-- <input class="form-control" type="text" name="category" placeholder="LED" ng-model="item.itemData.category" ng-disabled="item.disabled"> -->
+            <label><strong>Category:</strong></label>        
             <select class="form-control" name="category" ng-model="item.itemData.category"
                 ng-class="{ 'is-valid': (itemForm.category.$valid && !itemForm.category.$pristine), 'is-invalid': (!itemForm.category.$valid && !itemForm.category.$pristine)}"
                 ng-disabled="item.disabled">
@@ -40,7 +39,6 @@
                 ng-disabled="item.disabled">
             <br>
             <button class="btn btn-primary" type="submit" ng-disabled="item.disabled">Create</button>
-            <!-- <a href="/auth/facebook" target="_blank"><button type="button" class="btn btn-success">Facebook</button></a> -->
         </form>
         
         <br>

@@ -1,4 +1,5 @@
-var app = angular.module('appRoutes', ['ngRoute'])
+// Non API Angular routes accessed via the browser to deliver pages for the end user
+var app = angular.module('mainRoutes', ['ngRoute'])
     .config(function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
@@ -108,13 +109,17 @@ var app = angular.module('appRoutes', ['ngRoute'])
 app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $location, User) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if(next.$$route !== undefined) {
+            // Checks if the end user is logged in
             if(next.$$route.authenticated === true) {
+                // Redirects end user to login page anytime they load a page requiring user authentication
                 if(!Auth.isLoggedIn()) {
                     event.preventDefault();
                     $location.path('/login');
                 } else if (next.$$route.permission) {
+                    // Checks permission of the logged in user from the database before allowing access to admin/moderator content
                     User.getPermission()
                         .then(function(data) {
+                            // Redirects user to the main page if the permissions for the disered page are not met
                             if(next.$$route.permission[0] !== data.data.permission) {
                                 if(next.$$route.permission[1] !== data.data.permission) {
                                     event.preventDefault();

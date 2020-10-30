@@ -6,6 +6,7 @@ const validate = require('mongoose-validator');
 
 const saltRounds = 10;
 
+///// User creation validators, uses various regex and length checks even if the front end is defeated
 var nameValidator = [
     validate({
         validator: 'matches',
@@ -55,7 +56,9 @@ var passwordValidator = [
         message: 'Password must be between {ARGS[0]} and {ARGS[1]} characters.'
     })
 ];
+/////
 
+///// Setting up the Mongoose User model
 var UserSchema = new Schema({
     name:           { type: String, required: true, validate: nameValidator },
     username:       { type: String, required: true, unique: true, lowercase: true, validate: usernameValidator },
@@ -77,7 +80,9 @@ var UserSchema = new Schema({
         linkedin:       { type: String, required: false, default: 'N/A' }
     }
 });
+/////
 
+///// Bcrypt hashes user password before adding the user to the database
 UserSchema.pre('save', function(next) {
     var user = this;
 
@@ -97,11 +102,13 @@ UserSchema.pre('save', function(next) {
         })
         .catch(err => console.error(err.message));
 });
+/////
 
 UserSchema.plugin(titlize, {
     paths: [ 'name' ]
 });
 
+// Bcrypt hashes user login password and compares to the hash found in the database
 UserSchema.methods.comparePassword = function(password) {
     return bcrypt.compareSync(password, this.password)
 }

@@ -236,6 +236,8 @@ module.exports = function(router) {
             });
     });
 
+    // User Username Reset Route
+    // http://localhost:8080/api/resetusername/email
     router.get('/resetusername/:email', function(req, res) {
         User.findOne({ email: req.params.email }).select('email username name')
             .exec(function(err, user) {
@@ -272,6 +274,8 @@ module.exports = function(router) {
             });
     });
 
+    // User Password Reset Route
+    // http://localhost:8080/api/resetpassword/username
     router.put('/resetpassword', function(req, res) {
         User.findOne({ username: req.body.username }).select('username email active resettoken name')
             .exec(function(err, user) {
@@ -514,6 +518,8 @@ module.exports = function(router) {
         }
     });
 
+    // User Permission Route
+    // http://localhost:8080/api/permission
     router.get('/permission', function(req, res) {
         User.findOne({ username: req.decoded.username }, function(err, user) {
             if (err) throw err;

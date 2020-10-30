@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
+///// Setting up the Mongoose Item model
 var ItemSchema = new Schema ({
     part:     { type: String, required: true, unique: true },
     quanity:  { type: Number, required: true },
@@ -14,5 +15,6 @@ var ItemSchema = new Schema ({
         username: { type: String, required: false }
     }
 })
+/////
 
 module.exports = mongoose.model('Item', ItemSchema);
