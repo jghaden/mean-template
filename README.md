@@ -26,22 +26,22 @@ This application requires installation of [NodeJS](https://nodejs.org/) and [Mon
 
 ## User account registration page
 <br>
-<img src="pics/user-registration.png" width="512px" style="border-style: dashed">
+<img src="pics/user-registration.png" width="512px">
 
 <hr>
 
 ## User Profile
-<img src="pics/user-profile.png" width="512px" style="border-style: dashed">
+<img src="pics/user-profile.png" width="512px">
 
 <hr>
 
 ## Item creation page
-<img src="pics/item-creation.png" width="512px" style="border-style: dashed">
+<img src="pics/item-creation.png" width="512px">
 
 <hr>
 
 ## View items located in the database
-<img src="pics/item-list.png" width="512px" style="border-style: dashed">
+<img src="pics/item-list.png" width="512px">
 
 <br>
 <br>
