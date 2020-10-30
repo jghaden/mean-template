@@ -3,15 +3,49 @@
 
 This is a Single Page Application using MongoDB, ExpressJS, AngularJS, and NodeJS with a RESTful API.
 
-## Requirements
+# Overview
 
-This application requires installation of [NodeJS](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) prior to running.
+1. [Description](#description)
+2. [Requirements](#requirements)
+3. [Features](#features)
+4. [Installation](#installation)
+5. [Running](#start-server)
+6. [Styling](#styling)
 
-## Description
+# Description
 
 This template was created to act as a quick spring board or boiler plate to quickly build web applications.
 
 The application implements user login, registration, and authentication. However, users can only proceed after accepting a confirmation email sent with [Nodemailer](https://nodemailer.com/about/) configured using Gmail SMTP.
+
+# Requirements
+
+This application requires installation of [NodeJS](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) prior to running.
+
+# Features
+
+## User account registration page
+<br>
+<img src="pics/user-registration.png" width="512px" style="border-style: dashed">
+
+<hr>
+
+## User Profile
+<img src="pics/user-profile.png" width="512px" style="border-style: dashed">
+
+<hr>
+
+## Item creation page
+<img src="pics/item-creation.png" width="512px" style="border-style: dashed">
+
+<hr>
+
+## View items located in the database
+<img src="pics/item-list.png" width="512px" style="border-style: dashed">
+
+<br>
+<br>
+<br>
 
 # Installation
 ```
