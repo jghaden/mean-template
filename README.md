@@ -1,11 +1,11 @@
 
-# SPA MEAN/Bootstrap Template
+# MEAN/Bootstrap SPA Template
 
 This is a Single Page Application using MongoDB, ExpressJS, AngularJS, and NodeJS with a RESTful API.
 
 ## Requirements
 
-This application requires installation of NodeJS and MongoDB prior to running.
+This application requires installation of [NodeJS](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) prior to running.
 
 ## Description
 
@@ -13,7 +13,7 @@ This template was created to act as a quick spring board or boiler plate to quic
 
 The application implements user login, registration, and authentication. However, users can only proceed after accepting a confirmation email sent with [Nodemailer](https://nodemailer.com/about/) configured using Gmail SMTP.
 
-## Installation
+# Installation
 ```
 $ npm install
 ```
@@ -68,3 +68,13 @@ or
 ```
 $ npm start server.js
 ```
+
+# Styling
+
+This application makes use of [Bootstrap v4.5](https://getbootstrap.com/docs/4.5/getting-started/introduction/) for elements such as ```<table>``` for viewing Users or Items found in the database in a clean fashion as well as ```<nav>``` for the main navigation bar located in [index.html](/public/app/views/index.html)
+
+## Sass
+
+Sass *(.scss)* files are located in [public/assets/sass](/public/assets/sass).
+
+There is a **watch-css** NPM script in [package.json](package.json) that will actively watch for changes (only on saves) in the Sass folder. When you save a change in a scss file, **node-sass** will process the files and save it as [main.css](/public/assets/css/main.css) in the css folder located in [public/assets/css](/public/assets/css).
