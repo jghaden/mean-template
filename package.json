@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node",
-    "compile-css": "node-sass -w src/sass -o public/assets/css",
+    "watch-sass": "node-sass -w public/assets/sass -o public/assets/css",
     "dev": "nodemon"
   },
   "keywords": [
