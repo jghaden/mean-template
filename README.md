@@ -77,4 +77,12 @@ This application makes use of [Bootstrap v4.5](https://getbootstrap.com/docs/4.5
 
 Sass *(.scss)* files are located in [public/assets/sass](/public/assets/sass).
 
-There is a **watch-css** NPM script in [package.json](package.json) that will actively watch for changes (only on saves) in the Sass folder. When you save a change in a scss file, **node-sass** will process the files and save it as [main.css](/public/assets/css/main.css) in the css folder located in [public/assets/css](/public/assets/css).
+There is a **watch-css** NPM script in [package.json](package.json) that will actively watch for changes (only on saves) in the Sass folder. When you save a change in a scss file, **node-sass** will process the Sass and save it as [main.css](/public/assets/css/main.css) in the css folder located in [public/assets/css](/public/assets/css).
+
+[main.css](/public/assets/css/main.css) is loaded after the Bootstrap CDN files in [index.html](/public/app/views/index.html)
+
+## **WARNING**
+
+Do not make changes to the [main.css](/public/assets/css/main.css) files if you plan to use Sass.
+
+Node-sass will over write anything in [main.css](/public/assets/css/main.css) if the **watch-sass** NPM script is running
