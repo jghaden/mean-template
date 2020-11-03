@@ -6,6 +6,10 @@ var app = angular.module('mainRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/home.html'
             })
 
+            .when('/about', {
+                templateUrl: 'app/views/pages/about.html'
+            })
+
             .when('/register', {
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
@@ -70,7 +74,7 @@ var app = angular.module('mainRoutes', ['ngRoute'])
                 authenticated: true
             })
 
-            .when('/items/view/list', {
+            .when('/items/view', {
                 templateUrl: 'app/views/pages/items/list.html',
                 controller: 'itemListCtrl',
                 controllerAs: 'itemList'
