@@ -13,7 +13,8 @@ var app = angular.module('mainRoutes', ['ngRoute'])
             .when('/register', {
                 templateUrl: 'app/views/pages/users/register.html',
                 controller: 'regCtrl',
-                controllerAs: 'register'
+                controllerAs: 'register',
+                authenticated: false
             })
 
             .when('/login', {
@@ -132,7 +133,12 @@ app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $
                             }
                         });
                 }
-            } 
+            } else if(next.$$route.authenticated === false) {
+                if(Auth.isLoggedIn()) {
+                    event.preventDefault();
+                    $location.path('/');
+                }
+            }
         }
     });
 }]);

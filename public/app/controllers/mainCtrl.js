@@ -3,6 +3,7 @@ angular.module('mainController', ['authServices'])
         var app = this;
 
         app.loaded = false;
+        app.authorized = false;
 
         $rootScope.$on('$routeChangeStart', function() {
             if (Auth.isLoggedIn()) {
