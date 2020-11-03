@@ -96,6 +96,7 @@ angular.module('userControllers', ['userServices'])
                     app.name       = data.data.user.name;
                     app.username   = data.data.user.username;
                     app.email      = data.data.user.email;
+                    app.avatar     = data.data.user.avatar;
 
                     app.profession = data.data.user.social.profession;
                     app.location   = data.data.user.social.location;

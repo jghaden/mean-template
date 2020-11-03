@@ -64,6 +64,7 @@ var UserSchema = new Schema({
     username:       { type: String, required: true, unique: true, lowercase: true, validate: usernameValidator },
     password:       { type: String, required: true, validate: passwordValidator, select: false },
     email:          { type: String, required: true, unique: true, lowercase: true, validate: emailValidator },
+    avatar:         { type: String, required: false, default: 'https://picsum.photos/id/818/200' },
     created:        { type: Date, default: Date.now },
     active:         { type: Boolean, required: true, default: false },
     permission:     { type: String, required: true, default: 'user'},
