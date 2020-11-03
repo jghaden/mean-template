@@ -19,5 +19,9 @@ angular.module('itemServices', [])
             return $http.get('/api/item/' + part);
         };
 
+        itemFactory.deleteItem = function(item) {
+            return $http.delete('/api/items/delete/' + item);
+        };
+
         return itemFactory;
     });

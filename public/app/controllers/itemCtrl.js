@@ -51,11 +51,18 @@ angular.module('itemController', ['authServices'])
         }     
     })
 
-    .controller('itemListCtrl', function(Item, $location) {
+    .controller('itemListCtrl', function(Item, User, $location) {
         var app = this;
 
         app.loading = true;
-        app.deleteItem = false;
+        app.deleteItemName = false;
+
+        User.getPermission()
+            .then(function(data) {
+                if(data.data.permission == 'admin' || data.data.permission == 'moderator') {
+                    app.authorized = true;
+                }
+            });
 
         app.viewItem = function(id) {
             $location.path('/items/view/' + id);
@@ -84,6 +91,17 @@ angular.module('itemController', ['authServices'])
         }
 
         getItems();
+
+        app.deleteItem = function(item) {
+            Item.deleteItem(item)
+                .then(function(data) {
+                    if(data.data.success) {
+                        getItems();
+                    } else {
+                        app.errorMsg = data.data.message;
+                    }
+                });
+        };
     })
 
     .controller('itemViewCtrl', function(Item, $route, $location) {

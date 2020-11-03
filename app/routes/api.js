@@ -518,6 +518,28 @@ module.exports = function(router) {
         }
     });
 
+    router.delete('/items/delete/:item', function(req, res) {
+        var deletedItem = req.params.item;
+
+        User.findOne({ username: req.decoded.username }, function(err, mainUser) {
+            if(err) throw err;
+
+            if(!mainUser) {
+                res.json({ success: false, message: 'No user was found' });
+            } else {
+                if(mainUser.permission !== 'admin') {
+                    res.json({ success: false, message: 'Insufficient Permissions' });
+                } else {
+                        Item.findOneAndRemove({ part: req.params.item }, function(err, user) {
+                            if(err) throw err;
+
+                            res.json({ success: true });
+                        });
+                    }
+                }
+        });
+    });
+
     // User Permission Route
     // http://localhost:8080/api/permission
     router.get('/permission', function(req, res) {

@@ -26,11 +26,11 @@
                         </button>
                         </div>
                             <div class="modal-body">
-                                Are you sure you wish to delete <a href="/items/view/{{ itemList.deleteItem }}" target="_blank">{{ itemList.deleteItem }}</a>?
+                                Are you sure you wish to delete <a href="/items/view/{{ itemList.deleteItemName }}" target="_blank">{{ itemList.deleteItemName }}</a>?
                             </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="itemList.deleteItem(itemList.deleteItemName)">Delete</button>
                     </div>
                 </div>
             </div>
@@ -53,8 +53,8 @@
                     <td class="col-note">{{ item.note }}
                         <div class="col-actions justify-content-right text-secondary table-actions" ng-show="itemList.row == item._id">
                             <i class="fas fa-eye" title="View" ng-click="itemList.viewItem(item.part)"></i>
-                            <i class="fas fa-edit" title="Edit"></i>
-                            <i class="fas fa-trash" title="Remove" data-toggle="modal" data-target="#deleteItemModal" ng-click="itemList.deleteItem = item.part"></i>
+                            <i class="fas fa-edit" title="Edit" ng-show="itemList.authorized"></i>
+                            <i class="fas fa-trash" title="Remove" data-toggle="modal" data-target="#deleteItemModal" ng-click="itemList.deleteItemName = item.part" ng-show="itemList.authorized"></i>
                         </div>
                     </td>
                 </tr>
