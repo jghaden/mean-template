@@ -4,7 +4,7 @@
   "description": "SPA MEAN/Bootstrap template with RESTful API",
   "main": "server.js",
   "scripts": {
-    "start": "node",
+    "start": "node server.js",
     "watch-sass": "node-sass -w public/assets/sass -o public/assets/css",
     "dev": "nodemon"
   },
