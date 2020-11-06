@@ -62,7 +62,7 @@ module.exports = function(router) {
                         text: 'EMPTY',
                         html: '<h3>Hello ' + user.username + ',</h3>' +
                               '<p>Verify your email to activate your account</p><br>'+
-                              '<a href="http://localhost:8080/activate/' + user.temporarytoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Confirm Email</button>'
+                              '<a href="https://mean-template.herokuapp.com/activate/' + user.temporarytoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Confirm Email</button>'
                     }
                 
                     client.sendMail(email, function(err, info) {
@@ -159,7 +159,7 @@ module.exports = function(router) {
                                 text: 'EMPTY',
                                 html: '<h3>Hello ' + user.username + ',</h3>' +
                                       '<p>Your account has been activated.</p>'+
-                                      '<a href="http://localhost:8080/login"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Login</button>'
+                                      '<a href="https://mean-template.herokuapp.com/login"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Login</button>'
                             }
                         
                             client.sendMail(email, function(err, info) {
@@ -219,7 +219,7 @@ module.exports = function(router) {
                             text: 'EMPTY',
                             html: '<h3>Hello ' + user.username + ',</h3>' +
                                   '<p>Here is the activation link you requested.</p><br>'+
-                                  '<a href="http://localhost:8080/activate/' + user.temporarytoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Activate</button>'
+                                  '<a href="https://mean-template.herokuapp.com/activate/' + user.temporarytoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Activate</button>'
                         }
                     
                         client.sendMail(email, function(err, info) {
@@ -300,7 +300,7 @@ module.exports = function(router) {
                                     text: 'EMPTY',
                                     html: '<h3>Hello ' + user.username + ',</h3>' +
                                           '<p>Click the button below to reset your password.</p><br>'+
-                                          '<a href="http://localhost:8080/reset/' + user.resettoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Reset Password</button>'
+                                          '<a href="https://mean-template.herokuapp.com/reset/' + user.resettoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Reset Password</button>'
                                 }
                             
                                 client.sendMail(email, function(err, info) {

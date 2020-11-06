@@ -23,7 +23,7 @@ app.use('/api', mainRoutes);
 
 ///// Database Connection
 // If this app is deployed on the web, ensure the Mongo database is not on the localhost machine
-mongoose.connect('mongodb://localhost:27017/mean-template', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, function(err) {
+mongoose.connect('mongodb+srv://root:zKPQtx0msSnQitf0@cluster0.9chsv.mongodb.net/mean-template', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, function(err) {
     if(err) {
         console.log('Not connected to MongoDB: ' + err);
         throw err;
