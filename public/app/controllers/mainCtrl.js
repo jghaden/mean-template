@@ -29,11 +29,12 @@ angular.module('mainController', ['authServices'])
             app.loaded = true;
         });
 
-        this.doLogin = function(loginData) {
+        app.doLogin = function(loginData) {
             app.loading = true;
             app.errorMsg = false;
             app.expired = false;
             app.disabled = true;
+            app.resend = false;
 
             Auth.login(app.loginData)
                 .then(function(data) {
@@ -59,14 +60,29 @@ angular.module('mainController', ['authServices'])
                 });
             }
 
-        this.logout = function() {
+        app.logout = function() {
             Auth.logout();
             app.disabled = false;
 
             $location.path('/logout');
             $timeout(function() {
                 $location.path('/login');
-            }, 1000);
+                location.reload();
+            }, 50);
+        }
+
+        app.resendLink = function(username) {
+            User.resendLink(app.loginData)
+                .then(function(data) {
+                    if(data.data.success) {
+                        app.loading = false;
+                        app.errorMsg = false;
+                        app.successMsg = data.data.message;
+                    } else {
+                        app.loading = false;
+                        app.errorMsg = data.data.message;
+                    }
+                });
         }
     });
 

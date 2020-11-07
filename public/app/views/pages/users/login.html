@@ -34,7 +34,7 @@
         <br>
         
         <div class="row show-hide-message" ng-show="main.errorMsg">
-            <div class="alert alert-danger">{{ main.errorMsg }}&nbsp<a href="/resend" ng-show="main.expired"><button class="btn btn-success" type="submit">Resend Activation Link</button></a></div>
+            <div class="alert alert-danger">{{ main.errorMsg }}&nbsp<a href="#" ng-show="main.expired" ng-click="main.resendLink()"><button class="btn btn-success" type="submit">Resend Activation Link</button></a></div>
         </div>
     </div>
 </div>
