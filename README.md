@@ -18,6 +18,8 @@ This template was created to act as a boiler plate for quick web application dev
 
 The template implements user registration, user login, item creation, viewing and deletion. However, users can only proceed after accepting a confirmation email sent with [**Nodemailer**](https://nodemailer.com/about/) configured using Gmail SMTP.
 
+Here is a [**video**](https://www.youtube.com/watch?v=rujXkHMfauI) showcasing the template.
+
 # Requirements
 
 This application requires installation of [**NodeJS**](https://nodejs.org/) and [**MongoDB**](https://www.mongodb.com/) prior to running.
