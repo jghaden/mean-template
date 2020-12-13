@@ -2,18 +2,19 @@ const User       = require('../models/user');
 const Item       = require('../models/item');
 const jwt        = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+
 var secret       = 'token_secret';
 
 module.exports = function(router) {
-    // SENSITIVE
+    // Email config
+    // Used for emailing account activation links
     var client = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
         secure: false,
         auth: {
-            user: 'joshghaden@gmail.com',
-            // app-specific password
-            pass: 'thulcoziwuhfcfbq'
+            user: 'username@gmail.com',
+            pass: 'app-specific-password'
         }
     });
 
@@ -56,7 +57,7 @@ module.exports = function(router) {
                     res.json({ success: true, message: 'Confirm your email via our activation link.' });
 
                     var email = {
-                        from: 'MEAN Template, joshghaden@gmail.com',
+                        from: 'MEAN Template, username@gmail.com',
                         to: user.email,
                         subject: 'Email Verification',
                         text: 'EMPTY',
@@ -153,7 +154,7 @@ module.exports = function(router) {
                             console.log(err);
                         } else {
                             var email = {
-                                from: 'MEAN Template, joshghaden@gmail.com',
+                                from: 'MEAN Template, username@gmail.com',
                                 to: user.email,
                                 subject: 'Account Activated',
                                 text: 'EMPTY',
@@ -178,7 +179,7 @@ module.exports = function(router) {
         });
     });
 
-    // User Resend Route
+    // User Request Activation Route
     // http://localhost:8080/api/resend
     router.post('/resend', function(req, res) {
         User.findOne({ username: req.body.username }).select('username password active')
@@ -201,6 +202,8 @@ module.exports = function(router) {
             });
     });
 
+    // User Resend Activation Route
+    // http://localhost:8080/api/resend
     router.put('/resend', function(req, res) {
         User.findOne({ username: req.body.username }).select('email username name temporarytoken')
             .exec(function(err, user) {
@@ -213,7 +216,7 @@ module.exports = function(router) {
                         console.log(err);
                     } else {
                         var email = {
-                            from: 'MEAN Template, joshghaden@gmail.com',
+                            from: 'MEAN Template, username@gmail.com',
                             to: user.email,
                             subject: 'Activation Request',
                             text: 'EMPTY',
@@ -251,7 +254,7 @@ module.exports = function(router) {
                             res.json({ success: false, message: 'An account with that email was not found.' });
                         } else {
                             var email = {
-                                from: 'MEAN Template, joshghaden@gmail.com',
+                                from: 'MEAN Template, username@gmail.com',
                                 to: user.email,
                                 subject: 'Username Request',
                                 text: 'EMPTY',
@@ -294,7 +297,7 @@ module.exports = function(router) {
                                 res.json({ success: false, message: err });
                             } else {
                                 var email = {
-                                    from: 'MEAN Template, joshghaden@gmail.com',
+                                    from: 'MEAN Template, username@gmail.com',
                                     to: user.email,
                                     subject: 'Password Reset Request',
                                     text: 'EMPTY',
@@ -319,6 +322,8 @@ module.exports = function(router) {
             });
     });
 
+    // User Password Reset Route
+    // http://localhost:8080/api/resetpassword/token
     router.get('/resetpassword/:token', function(req, res) {
         User.findOne({ resettoken: req.params.token }).select()
             .exec(function(err, user) {
@@ -340,6 +345,8 @@ module.exports = function(router) {
             });
     });
 
+    // User Save Password Route
+    // http://localhost:8080/api/savepassword
     router.put('/savepassword', function(req, res) {
         User.findOne({ username: req.body.username }).select('username email name password resettoken')
             .exec(function(err, user) {
@@ -356,7 +363,7 @@ module.exports = function(router) {
                             res.json({ success: false, message: err });
                         } else {
                             var email = {
-                                from: 'MEAN Template, joshghaden@gmail.com',
+                                from: 'MEAN Template, username@gmail.com',
                                 to: user.email,
                                 subject: 'Password Reset',
                                 text: 'EMPTY',
@@ -518,6 +525,8 @@ module.exports = function(router) {
         }
     });
 
+    // Item Deletion Route
+    // http://localhost:8080/api/items/create
     router.delete('/items/delete/:item', function(req, res) {
         var deletedItem = req.params.item;
 
@@ -551,52 +560,6 @@ module.exports = function(router) {
             } else {
                 res.json({ success: true, permission: user.permission });
             }
-        });
-    });
-
-    router.get('/manage', function(req, res) {
-        User.find({}, function(err, users) {
-            if(err) throw err;
-
-            User.findOne({ username: req.decoded.username }, function(err, mainUser) {
-                if(err) throw err;
-
-                if(!mainUser) {
-                    res.json({ success: false, message: 'No user was found' });
-                } else {
-                    if(mainUser.permission == 'admin' || mainUser.permission == 'moderator') {
-                        if(!users) {
-                            res.json({ success: false, message: 'Users were not found' });
-                        } else {
-                            res.json({ success: true, users: users, permission: mainUser.permission });
-                        }
-                    } else {
-                        res.json({ success: false, message: 'Insufficient Permissions' });
-                    }
-                }
-            })
-        });
-    });
-
-    router.delete('/manage/:username', function(req, res) {
-        var deletedUser = req.params.username;
-
-        User.findOne({ username: req.decoded.username }, function(err, mainUser) {
-            if(err) throw err;
-
-            if(!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
-            } else {
-                if(mainUser.permission !== 'admin') {
-                    res.json({ success: false, message: 'Insufficient Permissions' });
-                } else {
-                        User.findOneAndRemove({ username: deletedUser}, function(err, user) {
-                            if(err) throw err;
-
-                            res.json({ success: true });
-                        });
-                    }
-                }
         });
     });
 

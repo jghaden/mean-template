@@ -87,22 +87,6 @@ var app = angular.module('mainRoutes', ['ngRoute'])
                 controllerAs: 'itemView'
             })
 
-            .when('/manage/users', {
-                templateUrl: 'app/views/pages/manage/users/manage.html',
-                controller: 'manageCtrl',
-                controllerAs: 'manage',
-                authenticated: true,
-                permission: ['admin', 'moderator']
-            })
-
-            .when('/manage/users/edit/:id', {
-                templateUrl: 'app/views/pages/manage/users/edit.html',
-                controller: 'editCtrl',
-                controllerAs: 'edit',
-                authenticated: true,
-                permission: ['admin', 'moderator']
-            })
-
             .otherwise({ redirectTo: '/'});
 
             $locationProvider.html5Mode({
@@ -120,18 +104,6 @@ app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $
                 if(!Auth.isLoggedIn()) {
                     event.preventDefault();
                     $location.path('/login');
-                } else if (next.$$route.permission) {
-                    // Checks permission of the logged in user from the database before allowing access to admin/moderator content
-                    User.getPermission()
-                        .then(function(data) {
-                            // Redirects user to the main page if the permissions for the disered page are not met
-                            if(next.$$route.permission[0] !== data.data.permission) {
-                                if(next.$$route.permission[1] !== data.data.permission) {
-                                    event.preventDefault();
-                                    $location.path('/');
-                                }
-                            }
-                        });
                 }
             } else if(next.$$route.authenticated === false) {
                 if(Auth.isLoggedIn()) {

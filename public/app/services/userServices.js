@@ -50,13 +50,5 @@ angular.module('userServices', [])
             return $http.get('/api/permission');
         };
 
-        userFactory.getUsers = function() {
-            return $http.get('/api/manage');
-        };
-        
-        userFactory.deleteUser = function(username) {
-            return $http.delete('/api/manage/' + username);
-        };
-
         return userFactory;
     });

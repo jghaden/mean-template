@@ -104,8 +104,7 @@ angular.module('userControllers', ['userServices'])
                     app.github     = data.data.user.social.github;
                     app.linkedin   = data.data.user.social.linkedin;
 
-                    var date = new Date(data.data.user.created);
-                    app.created = date.toUTCString();
+                    app.created = DateFormatted(data.data.user.created);
                 } else {
                     // Redirect to home path if user profile is not found
                     $location.path('/')

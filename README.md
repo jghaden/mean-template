@@ -14,9 +14,9 @@ This is a Single Page Application using MongoDB, ExpressJS, AngularJS, and NodeJ
 
 # Description
 
-This template was created to act as a quick spring board or boiler plate to quickly build web applications.
+This template was created to act as a boiler plate for quick web application development.
 
-This application implements user registration, user login, item creation, viewing and deletion. However, users can only proceed after accepting a confirmation email sent with [**Nodemailer**](https://nodemailer.com/about/) configured using Gmail SMTP.
+The template implements user registration, user login, item creation, viewing and deletion. However, users can only proceed after accepting a confirmation email sent with [**Nodemailer**](https://nodemailer.com/about/) configured using Gmail SMTP.
 
 # Requirements
 
@@ -27,7 +27,7 @@ This application requires installation of [**NodeJS**](https://nodejs.org/) and 
 $ npm install
 ```
 
-### Enter your own MongoDB configuration settings in the [server.js](/server.js)
+### Enter your own MongoDB configuration settings in [**server.js**](/server.js)
 
 ![](/pics/code-block-1.png)
 

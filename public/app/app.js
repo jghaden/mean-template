@@ -7,7 +7,6 @@ angular.module('userApp',
         'mainController',
         'authServices',
         'emailController',
-        'manageController',
         'itemServices',
         'itemController'
     ])

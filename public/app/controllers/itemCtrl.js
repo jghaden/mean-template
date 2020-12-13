@@ -115,8 +115,7 @@ angular.module('itemController', ['authServices'])
                     if(data.data.success) {
                         app.item = data.data.item;
 
-                        var date = new Date(data.data.item.created);
-                        app.item.created = date.toUTCString();
+                        app.item.created = DateFormatted(data.data.item.created);
                         
                         app.loading = false;
                     } else {

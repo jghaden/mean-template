@@ -34,13 +34,14 @@
     <script src="app/controllers/userCtrl.js"></script>
     <script src="app/controllers/mainCtrl.js"></script>
     <script src="app/controllers/emailCtrl.js"></script>
-    <script src="app/controllers/manageCtrl.js"></script>
     <script src="app/controllers/itemCtrl.js"></script>
 
     <!-- Angular Services -->
     <script src="app/services/userServices.js"></script>
     <script src="app/services/authServices.js"></script>
     <script src="app/services/itemServices.js"></script>
+
+    <script src="../../assets/js/util.js"></script>
 
     <title>MEAN SPA Template</title>
   </head>
@@ -85,7 +86,6 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/profile/{{ main.username }}">Profile</a>
-              <a class="dropdown-item" href="/manage/users" ng-show="main.authorized">Manage</a>
               <a class="dropdown-item" href="#" ng-click="main.logout();">Logout</a>
             </div>
           </li>

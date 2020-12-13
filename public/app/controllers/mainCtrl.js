@@ -12,13 +12,6 @@ angular.module('mainController', ['authServices'])
                     .then(function(data) {
                         app.username = data.data.username;
                         app.email = data.data.email;
-
-                        User.getPermission()
-                            .then(function(data) {
-                                if(data.data.permission == 'admin' || data.data.permission == 'moderator') {
-                                    app.authorized = true;
-                                }
-                            })
                     });
             } else {
                 app.isLoggedIn = false;
