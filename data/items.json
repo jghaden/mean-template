@@ -1,121 +1,102 @@
-[{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa925f"
+[
+  {
+    "part": "MC1723CP",
+    "quanity": 2,
+    "category": "IC",
+    "note": "Voltage Regulator",
+    "url": "https://www.digchip.com/datasheets/parts/datasheet/343/MC1723CP-pdf.php",
+    "created": {
+      "$date": "2020-10-27T17:09:19.539Z"
+    }
   },
-  "part": "MC1723CP",
-  "quanity": 2,
-  "category": "IC",
-  "note": "Voltage Regulator",
-  "url": "https://www.digchip.com/datasheets/parts/datasheet/343/MC1723CP-pdf.php",
-  "created": {
-    "$date": "2020-10-27T17:09:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9260"
+  {
+    "part": "DS1220Y",
+    "quanity": 1,
+    "category": "IC",
+    "note": "16k Nonvolatile SRAM",
+    "url": "https://www.digchip.com/datasheets/parts/datasheet/280/DS1220Y-150.php",
+    "created": {
+      "$date": "2020-10-27T17:08:19.539Z"
+    }
   },
-  "part": "DS1220Y",
-  "quanity": 1,
-  "category": "IC",
-  "note": "16k Nonvolatile SRAM",
-  "url": "https://www.digchip.com/datasheets/parts/datasheet/280/DS1220Y-150.php",
-  "created": {
-    "$date": "2020-10-27T17:08:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9261"
+  {
+    "part": "BU157",
+    "quanity": 1,
+    "category": "BJT",
+    "note": "NPN Power Transistor",
+    "url": "https://alltransistors.com/transistor.php?transistor=29606",
+    "created": {
+      "$date": "2020-10-27T17:07:19.539Z"
+    }
   },
-  "part": "BU157",
-  "quanity": 1,
-  "category": "BJT",
-  "note": "NPN Power Transistor",
-  "url": "https://alltransistors.com/transistor.php?transistor=29606",
-  "created": {
-    "$date": "2020-10-27T17:07:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9262"
+  {
+    "part": "1M 1-Turn-Pot",
+    "quanity": 22,
+    "category": "RES",
+    "note": "Generic 1M 1-Turn Potentiometer",
+    "url": "N/A",
+    "created": {
+      "$date": "2020-10-27T17:06:19.539Z"
+    }
   },
-  "part": "1M 1-Turn-Pot",
-  "quanity": 22,
-  "category": "RES",
-  "note": "Generic 1M 1-Turn Potentiometer",
-  "url": "N/A",
-  "created": {
-    "$date": "2020-10-27T17:06:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9263"
+  {
+    "part": "SY6522",
+    "quanity": 3,
+    "category": "IC",
+    "note": "Versatile Interface Adapter (VIA)",
+    "url": "http://archive.6502.org/datasheets/synertek_sy6522_via_1978_jan.pdf",
+    "created": {
+      "$date": "2020-10-27T17:05:19.539Z"
+    }
   },
-  "part": "SY6522",
-  "quanity": 3,
-  "category": "IC",
-  "note": "Versatile Interface Adapter (VIA)",
-  "url": "http://archive.6502.org/datasheets/synertek_sy6522_via_1978_jan.pdf",
-  "created": {
-    "$date": "2020-10-27T17:05:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9264"
+  {
+    "part": "R6520-26",
+    "quanity": 1,
+    "category": "IC",
+    "note": "Peripheral Interface Adapter (PIA)",
+    "url": "http://archive.6502.org/datasheets/rockwell_r6520_pia.pdf",
+    "created": {
+      "$date": "2020-10-27T17:04:19.539Z"
+    }
   },
-  "part": "R6520-26",
-  "quanity": 1,
-  "category": "IC",
-  "note": "Peripheral Interface Adapter (PIA)",
-  "url": "http://archive.6502.org/datasheets/rockwell_r6520_pia.pdf",
-  "created": {
-    "$date": "2020-10-27T17:04:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9265"
+  {
+    "part": "Z8420AB1",
+    "quanity": 10,
+    "category": "IC",
+    "note": "Z80 Parallel Input/Output Controller (PIO)",
+    "url": "https://www.digchip.com/datasheets/parts/datasheet/456/Z8420AB1-pdf.php",
+    "created": {
+      "$date": "2020-10-27T17:03:19.539Z"
+    }
   },
-  "part": "Z8420AB1",
-  "quanity": 10,
-  "category": "IC",
-  "note": "Z80 Parallel Input/Output Controller (PIO)",
-  "url": "https://www.digchip.com/datasheets/parts/datasheet/456/Z8420AB1-pdf.php",
-  "created": {
-    "$date": "2020-10-27T17:03:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9266"
+  {
+    "part": "Z8400AB1",
+    "quanity": 3,
+    "category": "IC",
+    "note": "Z80A CPU",
+    "url": "https://pdf1.alldatasheet.com/datasheet-pdf/view/25732/STMICROELECTRONICS/Z8400AB1.html",
+    "created": {
+      "$date": "2020-10-27T17:02:19.539Z"
+    }
   },
-  "part": "Z8400AB1",
-  "quanity": 3,
-  "category": "IC",
-  "note": "Z80A CPU",
-  "url": "https://pdf1.alldatasheet.com/datasheet-pdf/view/25732/STMICROELECTRONICS/Z8400AB1.html",
-  "created": {
-    "$date": "2020-10-27T17:02:19.539Z"
-  }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9267"
+  {
+    "part": "2N2905A",
+    "quanity": 3,
+    "category": "BJT",
+    "note": "PNP Transistor",
+    "url": "https://www.onsemi.com/pub/Collateral/2N2905A-D.PDF",
+    "created": {
+      "$date": "2020-10-27T17:01:19.539Z"
+    }
   },
-  "part": "2N2905A",
-  "quanity": 3,
-  "category": "BJT",
-  "note": "PNP Transistor",
-  "url": "https://www.onsemi.com/pub/Collateral/2N2905A-D.PDF",
-  "created": {
-    "$date": "2020-10-27T17:01:19.539Z"
+  {
+    "part": "FPT 510",
+    "quanity": 3,
+    "category": "PHOTO",
+    "note": "High-Sensitivity Silicon Phototransistor",
+    "url": "https://datasheetspdf.com/pdf-file/558768/AbornElectronics/FPT510/1",
+    "created": {
+      "$date": "2020-10-27T17:00:19.539Z"
+    }
   }
-},{
-  "_id": {
-    "$oid": "5f9f57adb46fdf1c64aa9268"
-  },
-  "part": "FPT 510",
-  "quanity": 3,
-  "category": "PHOTO",
-  "note": "High-Sensitivity Silicon Phototransistor",
-  "url": "https://datasheetspdf.com/pdf-file/558768/AbornElectronics/FPT510/1",
-  "created": {
-    "$date": "2020-10-27T17:00:19.539Z"
-  }
-}]
+]
