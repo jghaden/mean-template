@@ -25,6 +25,7 @@
                 <label><strong>Email:</strong></label>
                 <input class="form-control" type="text" name="email" placeholder="john@domain.tld" ng-model="register.regData.email" required
                     ng-class="{ 'is-valid': (regForm.email.$valid && !regForm.email.$pristine), 'is-invalid': (!regForm.email.$valid && !regForm.email.$pristine) || (register.emailInvalid)}"
+                    ng-model-options="{ debounce: 750 }"
                     ng-pattern="/^.+@.+?\.[a-zA-Z]{2,}$/"
                     ng-change="register.checkEmail(regData);"            
                     ng-minlength="5" ng-maxlength="40"
@@ -41,6 +42,7 @@
                 <label><strong>Username:</strong></label>
                 <input class="form-control" type="text" name="username" placeholder="johndoe19" ng-model="register.regData.username" required
                     ng-class="{ 'is-valid': (regForm.username.$valid && !regForm.username.$pristine), 'is-invalid': (!regForm.username.$valid && !regForm.username.$pristine) || (register.usernameInvalid)}"
+                    ng-model-options="{ debounce: 750 }"
                     ng-pattern="/^[a-zA-Z0-9]{3,30}$/"
                     ng-change="register.checkUsername(regData);"
                     ng-minlength="3" ng-maxlength="30"

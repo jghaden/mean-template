@@ -3,7 +3,10 @@ const Item       = require('../models/item');
 const jwt        = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
-var secret       = 'token_secret';
+var hostEmail    = 'joshghaden@gmail.com';
+var hostName     = 'localhost';
+var hostPort     = 8080;
+var secret       = 'drJpuy8MaMFr0dTE';
 
 module.exports = function(router) {
     // Email config
@@ -13,14 +16,14 @@ module.exports = function(router) {
         port: 587,
         secure: false,
         auth: {
-            user: 'username@gmail.com',
-            pass: 'app-specific-password'
+            user: hostEmail,
+            pass: 'hmlymqoqkhxawcad'
         }
     });
 
     // User Registration Route
-    // http://localhost:8080/api/users
-    router.post('/users', function(req, res) {
+    // http://localhost:8080/api/user
+    router.post('/user', function(req, res) {
         var user = new User();
     
         user.name           = req.body.name;
@@ -57,20 +60,20 @@ module.exports = function(router) {
                     res.json({ success: true, message: 'Confirm your email via our activation link.' });
 
                     var email = {
-                        from: 'MEAN Template, username@gmail.com',
+                        from: hostEmail,
                         to: user.email,
                         subject: 'Email Verification',
                         text: 'EMPTY',
-                        html: '<h3>Hello ' + user.username + ',</h3>' +
+                        html: `<h3>Hello ${user.username},</h3>` +
                               '<p>Verify your email to activate your account</p><br>'+
-                              '<a href="http://localhost:8080/activate/' + user.temporarytoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Confirm Email</button>'
+                              `<a href="http://${hostName}:${hostPort}/activate/${user.temporarytoken}"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Confirm Email</button>`
                     }
                 
                     client.sendMail(email, function(err, info) {
                         if(err) {
                             console.log(err);
                         } else {
-                            console.log(info.respone);
+                            console.log(info.response);
                         }
                     });
                 }
@@ -126,7 +129,7 @@ module.exports = function(router) {
                 } else if(!user.active) {
                     res.json({ success: false, message: 'Account is not yet activated.', expired: true });
                 } else if(validPassword) {
-                    var token = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h' });
+                    var token = jwt.sign({ username: user.username, email: user.email }, secret);
                     res.json({ success: true, message: 'User authenticated', token: token });
                 }
             });
@@ -154,20 +157,20 @@ module.exports = function(router) {
                             console.log(err);
                         } else {
                             var email = {
-                                from: 'MEAN Template, username@gmail.com',
+                                from: hostEmail,
                                 to: user.email,
                                 subject: 'Account Activated',
                                 text: 'EMPTY',
-                                html: '<h3>Hello ' + user.username + ',</h3>' +
+                                html: `<h3>Hello ${user.username},</h3>` +
                                       '<p>Your account has been activated.</p>'+
-                                      '<a href="http://localhost:8080/login"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Login</button>'
+                                      `<a href="http://${hostName}:${hostPort}/login"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Login</button>`
                             }
                         
                             client.sendMail(email, function(err, info) {
                                 if(err) {
                                     console.log(err);
                                 } else {
-                                    console.log(info.respone);
+                                    console.log(info.response);
                                 }
                             });
 
@@ -209,33 +212,37 @@ module.exports = function(router) {
             .exec(function(err, user) {
                 if(err) throw err;
 
-                user.temporarytoken = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h' });
+                if(!user) {
+                    res.json({success: false, message: 'Account does not exist', expired: false });
+                } else {
+                    user.temporarytoken = jwt.sign({ username: user.username, email: user.email }, secret, { expiresIn: '24h' });
 
-                user.save(function(err) {
-                    if(err) {
-                        console.log(err);
-                    } else {
-                        var email = {
-                            from: 'MEAN Template, username@gmail.com',
-                            to: user.email,
-                            subject: 'Activation Request',
-                            text: 'EMPTY',
-                            html: '<h3>Hello ' + user.username + ',</h3>' +
-                                  '<p>Here is the activation link you requested.</p><br>'+
-                                  '<a href="http://localhost:8080/activate/' + user.temporarytoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Activate</button>'
-                        }
-                    
-                        client.sendMail(email, function(err, info) {
-                            if(err) {
-                                console.log(err);
-                            } else {
-                                console.log(info.respone);
+                    user.save(function(err) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            var email = {
+                                from: hostEmail,
+                                to: user.email,
+                                subject: 'Activation Request',
+                                text: 'EMPTY',
+                                html: `<h3>Hello ${user.username},</h3>` +
+                                      '<p>Here is the activation link you requested.</p><br>'+
+                                      `<a href="http://${hostName}:${hostPort}/activate/${user.temporarytoken}"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Activate</button>`
                             }
-                        });
-
-                        res.json({ success: true, message: 'Activation link has been sent to ' + user.email });
-                    }
-                });
+                        
+                            client.sendMail(email, function(err, info) {
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    console.log(info.response);
+                                }
+                            });
+    
+                            res.json({ success: true, message: `Activation link has been sent to ${user.email}` });
+                        }
+                    });
+                }
             });
     });
 
@@ -254,19 +261,19 @@ module.exports = function(router) {
                             res.json({ success: false, message: 'An account with that email was not found.' });
                         } else {
                             var email = {
-                                from: 'MEAN Template, username@gmail.com',
+                                from: hostEmail,
                                 to: user.email,
                                 subject: 'Username Request',
                                 text: 'EMPTY',
-                                html: '<h3>Hello ' + user.name + ',</h3>' +
-                                      '<p>You recently requested your username: <strong>'+ user.username + '</strong></p>'
+                                html: `<h3>Hello ${user.name},</h3>` +
+                                      `<p>You recently requested your username: <strong>${user.username}</strong></p>`
                             }
                         
                             client.sendMail(email, function(err, info) {
                                 if(err) {
                                     console.log(err);
                                 } else {
-                                    console.log(info.respone);
+                                    console.log(info.response);
                                 }
                             });
                             
@@ -297,20 +304,20 @@ module.exports = function(router) {
                                 res.json({ success: false, message: err });
                             } else {
                                 var email = {
-                                    from: 'MEAN Template, username@gmail.com',
+                                    from: hostEmail,
                                     to: user.email,
                                     subject: 'Password Reset Request',
                                     text: 'EMPTY',
-                                    html: '<h3>Hello ' + user.username + ',</h3>' +
+                                    html: `<h3>Hello ${user.username},</h3>` +
                                           '<p>Click the button below to reset your password.</p><br>'+
-                                          '<a href="http://localhost:8080/reset/' + user.resettoken + '"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Reset Password</button>'
+                                          `<a href="http://${hostName}:${hostPort}/reset/${user.resettoken}"><button style="background-color: #4682B4;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;">Reset Password</button>`
                                 }
                             
                                 client.sendMail(email, function(err, info) {
                                     if(err) {
                                         console.log(err);
                                     } else {
-                                        console.log(info.respone);
+                                        console.log(info.response);
                                     }
                                 });
                                 
@@ -363,11 +370,11 @@ module.exports = function(router) {
                             res.json({ success: false, message: err });
                         } else {
                             var email = {
-                                from: 'MEAN Template, username@gmail.com',
+                                from: hostEmail,
                                 to: user.email,
                                 subject: 'Password Reset',
                                 text: 'EMPTY',
-                                html: '<h3>Hello ' + user.username + ',</h3>' +
+                                html: `<h3>Hello ${user.username},</h3>` +
                                       '<p>Your password was recently reset.</p><br>'
                             }
                         
@@ -375,7 +382,7 @@ module.exports = function(router) {
                                 if(err) {
                                     console.log(err);
                                 } else {
-                                    console.log(info.respone);
+                                    console.log(info.response);
                                 }
                             });
 
@@ -470,8 +477,8 @@ module.exports = function(router) {
     });
 
     // Item Creation Route
-    // http://localhost:8080/api/items/create
-    router.post('/items/create', function(req, res) {
+    // http://localhost:8080/api/item/create
+    router.post('/item/create', function(req, res) {
         var item = new Item();
 
         item.part     = req.body.part;
@@ -526,8 +533,8 @@ module.exports = function(router) {
     });
 
     // Item Deletion Route
-    // http://localhost:8080/api/items/create
-    router.delete('/items/delete/:item', function(req, res) {
+    // http://localhost:8080/api/item/create
+    router.delete('/item/delete/:item', function(req, res) {
         var deletedItem = req.params.item;
 
         User.findOne({ username: req.decoded.username }, function(err, mainUser) {

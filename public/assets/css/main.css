@@ -27,9 +27,12 @@
   top: 75px;
   float: right; }
 
+.navbar {
+  padding: .5rem 3rem !important; }
+
 .nav-right {
   position: fixed;
-  right: 20px; }
+  right: 3rem; }
 
 .nav-right li {
   display: inline-block; }

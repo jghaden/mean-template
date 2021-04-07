@@ -3,7 +3,7 @@ angular.module('userServices', [])
         userFactory = {};
 
         userFactory.create = function(regData) {
-            return $http.post('/api/users', regData);
+            return $http.post('/api/user', regData);
         };
         
         userFactory.checkUsername = function(regData) {

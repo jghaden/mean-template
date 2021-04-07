@@ -3,13 +3,12 @@ angular.module('itemServices', [])
         itemFactory = {};
 
         itemFactory.create = function(itemData) {
-            return $http.post('/api/items/create', itemData);
+            return $http.post('/api/item/create', itemData);
         };
 
         itemFactory.checkPart = function(itemData) {
             return $http.post('/api/checkPart', itemData);
-        };
-        
+        };        
         
         itemFactory.getItems = function() {
             return $http.get('/api/items');
@@ -20,7 +19,7 @@ angular.module('itemServices', [])
         };
 
         itemFactory.deleteItem = function(item) {
-            return $http.delete('/api/items/delete/' + item);
+            return $http.delete('/api/item/delete/' + item);
         };
 
         return itemFactory;

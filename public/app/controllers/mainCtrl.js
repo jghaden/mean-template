@@ -1,22 +1,40 @@
 angular.module('mainController', ['authServices'])
-    .controller('mainCtrl', function(Auth, $rootScope, $timeout, $location, User) {
+    .controller('mainCtrl', function(Auth, $rootScope, $timeout, $location, User, AuthToken) {
         var app = this;
 
         app.loaded = false;
         app.authorized = false;
+        app.initalLogin = false;
 
         $rootScope.$on('$routeChangeStart', function() {
+            app.navTitle = undefined;
+
             if (Auth.isLoggedIn()) {
                 app.isLoggedIn = true;
                 Auth.getUser()
                     .then(function(data) {
                         app.username = data.data.username;
                         app.email = data.data.email;
+
+                        if(data.data.success == false) {
+                            app.logout();
+                        } else if(!app.initalLogin) {
+                            User.getProfile(app.username)
+                                .then(function(data) {
+                                    if(data.data.success) {
+                                        app.username = data.data.user.username;
+                                        app.email    = data.data.user.email;
+
+                                        var date = new Date(data.data.user.created);
+                                        app.created = date.toUTCString();
+                                    }
+                                });
+
+                            app.initalLogin = true;
+                        }
                     });
             } else {
                 app.isLoggedIn = false;
-                app.username = '';
-                app.email = '';
             }
 
             app.loaded = true;
@@ -29,14 +47,17 @@ angular.module('mainController', ['authServices'])
             app.disabled = true;
             app.resend = false;
 
+            app.isSidenavOpen = false;
+            app.isUsernavOpen = false;
+
             Auth.login(app.loginData)
                 .then(function(data) {
                     app.loading = false;
 
                     if(data.data.success) {
                         app.successMsg = data.data.message;
-                        $timeout(function(){
-                            $location.path('/about');
+                        $timeout(function() {
+                            $location.path('/projects');
                             app.loginData = '';
                             app.successMsg = false;
                         }, 1000);
@@ -78,5 +99,3 @@ angular.module('mainController', ['authServices'])
                 });
         }
     });
-
-        
