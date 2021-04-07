@@ -9,7 +9,8 @@
             <input class="form-control" type="text" name="part" placeholder="DL7751" ng-model="item.itemData.part" required
                 ng-class="{ 'is-valid': (itemForm.part.$valid && !itemForm.part.$pristine), 'is-invalid': (!itemForm.part.$valid && !itemForm.part.$pristine) || (item.partInvalid)}"
                 ng-change="item.checkPart(itemData);" 
-                ng-disabled="item.disabled">
+                ng-disabled="item.disabled"
+                ng-model-options="{ debounce: 750 }">
             <p class="help-block" ng-show="item.partInvalid" ng-class="{ 'state-valid': (!item.partInvalid), 'state-invalid': (item.partInvalid)}">{{ item.partMsg }}</p>
             <br>
             <label><strong>Quanity:</strong></label>

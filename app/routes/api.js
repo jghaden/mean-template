@@ -524,7 +524,7 @@ module.exports = function(router) {
                                     }
                                 }
                             } else {
-                                res.json({ success: true, message: 'Item has been added to the database.' });
+                                res.json({ success: true, message: `\'${item.part}\' has been added to the database.` });
                             }
                         });
                     }
@@ -537,22 +537,24 @@ module.exports = function(router) {
     router.delete('/item/delete/:item', function(req, res) {
         var deletedItem = req.params.item;
 
-        User.findOne({ username: req.decoded.username }, function(err, mainUser) {
-            if(err) throw err;
-
-            if(!mainUser) {
-                res.json({ success: false, message: 'No user was found' });
-            } else {
-                if(mainUser.permission !== 'admin') {
-                    res.json({ success: false, message: 'Insufficient Permissions' });
+        Item.findOne({ part: deletedItem }, function(err, item) {
+            User.findOne({ username: req.decoded.username }, function(err, mainUser) {
+                if(err) throw err;
+    
+                if(!mainUser) {
+                    res.json({ success: false, message: 'No user was found' });
                 } else {
-                        Item.findOneAndRemove({ part: req.params.item }, function(err, user) {
+                    if((mainUser.username == item.owner.username) || (mainUser.permission == 'admin')) {
+                        item.remove(function(err, item) {
                             if(err) throw err;
 
                             res.json({ success: true });
                         });
+                    } else {
+                        res.json({ success: false, message: 'Insufficient Permissions' });
                     }
                 }
+            });
         });
     });
 

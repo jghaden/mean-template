@@ -4,11 +4,9 @@ angular.module('mainController', ['authServices'])
 
         app.loaded = false;
         app.authorized = false;
-        app.initalLogin = false;
+        app.initalLogin = false;        
 
         $rootScope.$on('$routeChangeStart', function() {
-            app.navTitle = undefined;
-
             if (Auth.isLoggedIn()) {
                 app.isLoggedIn = true;
                 Auth.getUser()

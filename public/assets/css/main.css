@@ -28,11 +28,11 @@
   float: right; }
 
 .navbar {
-  padding: .5rem 3rem !important; }
+  padding: .5rem 48px !important; }
 
 .nav-right {
-  position: fixed;
-  right: 3rem; }
+  position: fixed !important;
+  right: 48px; }
 
 .nav-right li {
   display: inline-block; }
