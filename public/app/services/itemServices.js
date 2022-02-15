@@ -22,5 +22,9 @@ angular.module('itemServices', [])
             return $http.delete('/api/item/delete/' + item);
         };
 
+        itemFactory.update = function(itemData) {
+            return $http.patch('/api/item/update', itemData);
+        };
+
         return itemFactory;
     });

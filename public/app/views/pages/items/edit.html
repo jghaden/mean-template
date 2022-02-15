@@ -1,0 +1,63 @@
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+        <div class="page-header  text-center">
+            <h1 class="display-4">Edit Item</h1>
+        </div>
+        
+        <form name="itemForm" ng-submit="itemEdit.updateItem(itemData, (itemForm.$valid || itemForm.$pristine))" novalidate>
+            <label><strong>Part Name:</strong></label>
+            <input class="form-control" type="text" name="part" placeholder="DL7751" ng-model="itemEdit.itemData.part" required
+                ng-class="{ 'is-valid': (itemForm.part.$valid && !itemForm.part.$pristine), 'is-invalid': (!itemForm.part.$valid && !itemForm.part.$pristine) || (itemEdit.partInvalid)}"
+                ng-change="itemEdit.checkPart(itemData);" 
+                ng-disabled="itemEdit.disabled"
+                ng-model-options="{ debounce: 750 }">
+            <p class="help-block" ng-show="itemEdit.partInvalid" ng-class="{ 'state-valid': (!itemEdit.partInvalid), 'state-invalid': (itemEdit.partInvalid)}">{{ itemEdit.partMsg }}</p>
+            <br>
+            <label><strong>Quanity:</strong></label>
+            <input class="form-control" type="number" name="quanity" placeholder="39" ng-model="itemEdit.itemData.quanity" min=0 required
+                ng-class="{ 'is-valid': (itemForm.quanity.$valid && !itemForm.quanity.$pristine), 'is-invalid': (!itemForm.quanity.$valid && !itemForm.quanity.$pristine)}"
+                ng-disabled="itemEdit.disabled">
+            <br>
+            <label><strong>Category:</strong></label>        
+            <select class="form-control" name="category" ng-model="itemEdit.itemData.category"
+                ng-class="{ 'is-valid': (itemForm.category.$valid && !itemForm.category.$pristine), 'is-invalid': (!itemForm.category.$valid && !itemForm.category.$pristine)}"
+                ng-disabled="itemEdit.disabled">
+                <option value="BJT">BJT</option>
+                <option value="FET">FET</option>
+                <option value="IC">IC</option>
+                <option value="LED">LED</option>
+                <option value="RES">RES</option>
+            </select>
+            <br>
+            <label><strong>Note:</strong></label>
+            <input class="form-control" type="text" name="note" placeholder="7-Segment Display" ng-model="itemEdit.itemData.note"
+                ng-class="{ 'is-valid': (itemForm.note.$valid && !itemForm.note.$pristine), 'is-invalid': (!itemForm.note.$valid && !itemForm.note.$pristine)}"
+                ng-disabled="itemEdit.disabled">
+            <br>
+            <label><strong>URL:</strong></label>
+            <input class="form-control" type="url" name="url" placeholder="URL" ng-model="itemEdit.itemData.url"
+                ng-class="{ 'is-valid': (itemForm.url.$valid && !itemForm.url.$pristine), 'is-invalid': (!itemForm.url.$valid && !itemForm.url.$pristine)}"
+                ng-disabled="itemEdit.disabled">
+            <br>
+            <button class="btn btn-primary" type="submit" ng-disabled="itemEdit.disabled">Update</button>
+        </form>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="itemEdit.loading">
+            <div class="alert alert-secondary">Loading...</div>
+        </div>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="itemEdit.successMsg">
+            <div class="alert alert-success">{{ itemEdit.successMsg }}</div>
+        </div>
+        
+        <br>
+        
+        <div class="row show-hide-message" ng-show="itemEdit.errorMsg">
+            <div class="alert alert-danger">{{ itemEdit.errorMsg }}</div>
+        </div>
+    </div>
+</div>

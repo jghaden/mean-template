@@ -52,11 +52,17 @@
                     <td class="col-quanity text-center">{{ item.quanity }}</td>
                     <td class="col-note">{{ item.note }}
                         <div class="col-actions justify-content-right text-secondary table-actions" ng-show="itemList.row == item._id">
-                            <i class="fas fa-eye" title="View" ng-click="itemList.viewItem(item.part)"></i>
+                            <i class="fas fa-eye" title="View" 
+                                ng-click="itemList.viewItem(item.part)">
+                            </i>
                             <i class="fas fa-edit" title="Edit"
-                                ng-show="(itemList.authorized || item.owner.username == main.username) && main.username !== undefined"></i>
-                            <i class="fas fa-trash" title="Remove" data-toggle="modal" data-target="#deleteItemModal" ng-click="itemList.deleteItemName = item.part"
-                                ng-show="(itemList.authorized || item.owner.username == main.username) && main.username !== undefined"></i>
+                                ng-click="itemList.editItem(item.part)"
+                                ng-show="(itemList.authorized || item.owner.username == main.username) && main.username !== undefined">
+                            </i>
+                            <i class="fas fa-trash" title="Remove" data-toggle="modal" data-target="#deleteItemModal"
+                                ng-click="itemList.deleteItemName = item.part"
+                                ng-show="(itemList.authorized || item.owner.username == main.username) && main.username !== undefined">
+                            </i>
                         </div>
                     </td>
                 </tr>

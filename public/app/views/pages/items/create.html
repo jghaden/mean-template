@@ -1,27 +1,27 @@
 <div class="row d-flex justify-content-center">
     <div class="col-md-6">
         <div class="page-header  text-center">
-            <h1 class="display-4">Create Item</h1>
+            <h1 class="display-4">Edit Item</h1>
         </div>
         
-        <form name="itemForm" ng-submit="item.createItem(itemData, itemForm.$valid)" novalidate>
+        <form name="itemForm" ng-submit="itemCreate.createItem(itemData, itemForm.$valid)" novalidate>
             <label><strong>Part Name:</strong></label>
-            <input class="form-control" type="text" name="part" placeholder="DL7751" ng-model="item.itemData.part" required
-                ng-class="{ 'is-valid': (itemForm.part.$valid && !itemForm.part.$pristine), 'is-invalid': (!itemForm.part.$valid && !itemForm.part.$pristine) || (item.partInvalid)}"
-                ng-change="item.checkPart(itemData);" 
-                ng-disabled="item.disabled"
+            <input class="form-control" type="text" name="part" placeholder="DL7751" ng-model="itemCreate.itemData.part" required
+                ng-class="{ 'is-valid': (itemForm.part.$valid && !itemForm.part.$pristine), 'is-invalid': (!itemForm.part.$valid && !itemForm.part.$pristine) || (itemCreate.partInvalid)}"
+                ng-change="itemCreate.checkPart(itemData);" 
+                ng-disabled="itemCreate.disabled"
                 ng-model-options="{ debounce: 750 }">
-            <p class="help-block" ng-show="item.partInvalid" ng-class="{ 'state-valid': (!item.partInvalid), 'state-invalid': (item.partInvalid)}">{{ item.partMsg }}</p>
+            <p class="help-block" ng-show="itemCreate.partInvalid" ng-class="{ 'state-valid': (!itemCreate.partInvalid), 'state-invalid': (itemCreate.partInvalid)}">{{ itemCreate.partMsg }}</p>
             <br>
             <label><strong>Quanity:</strong></label>
-            <input class="form-control" type="number" name="quanity" placeholder="39" ng-model="item.itemData.quanity" min=0 required
+            <input class="form-control" type="number" name="quanity" placeholder="39" ng-model="itemCreate.itemData.quanity" min=0 required
                 ng-class="{ 'is-valid': (itemForm.quanity.$valid && !itemForm.quanity.$pristine), 'is-invalid': (!itemForm.quanity.$valid && !itemForm.quanity.$pristine)}"
-                ng-disabled="item.disabled">
+                ng-disabled="itemCreate.disabled">
             <br>
             <label><strong>Category:</strong></label>        
-            <select class="form-control" name="category" ng-model="item.itemData.category"
+            <select class="form-control" name="category" ng-model="itemCreate.itemData.category"
                 ng-class="{ 'is-valid': (itemForm.category.$valid && !itemForm.category.$pristine), 'is-invalid': (!itemForm.category.$valid && !itemForm.category.$pristine)}"
-                ng-disabled="item.disabled">
+                ng-disabled="itemCreate.disabled">
                 <option value="BJT">BJT</option>
                 <option value="FET">FET</option>
                 <option value="IC">IC</option>
@@ -30,34 +30,34 @@
             </select>
             <br>
             <label><strong>Note:</strong></label>
-            <input class="form-control" type="text" name="note" placeholder="7-Segment Display" ng-model="item.itemData.note"
+            <input class="form-control" type="text" name="note" placeholder="7-Segment Display" ng-model="itemCreate.itemData.note"
                 ng-class="{ 'is-valid': (itemForm.note.$valid && !itemForm.note.$pristine), 'is-invalid': (!itemForm.note.$valid && !itemForm.note.$pristine)}"
-                ng-disabled="item.disabled">
+                ng-disabled="itemCreate.disabled">
             <br>
             <label><strong>URL:</strong></label>
-            <input class="form-control" type="url" name="url" placeholder="URL" ng-model="item.itemData.url"
+            <input class="form-control" type="url" name="url" placeholder="URL" ng-model="itemCreate.itemData.url"
                 ng-class="{ 'is-valid': (itemForm.url.$valid && !itemForm.url.$pristine), 'is-invalid': (!itemForm.url.$valid && !itemForm.url.$pristine)}"
-                ng-disabled="item.disabled">
+                ng-disabled="itemCreate.disabled">
             <br>
-            <button class="btn btn-primary" type="submit" ng-disabled="item.disabled">Create</button>
+            <button class="btn btn-primary" type="submit" ng-disabled="itemCreate.disabled">Create</button>
         </form>
         
         <br>
         
-        <div class="row show-hide-message" ng-show="item.loading">
+        <div class="row show-hide-message" ng-show="itemCreate.loading">
             <div class="alert alert-secondary">Loading...</div>
         </div>
         
         <br>
         
-        <div class="row show-hide-message" ng-show="item.successMsg">
-            <div class="alert alert-success">{{ item.successMsg }}</div>
+        <div class="row show-hide-message" ng-show="itemCreate.successMsg">
+            <div class="alert alert-success">{{ itemCreate.successMsg }}</div>
         </div>
         
         <br>
         
-        <div class="row show-hide-message" ng-show="item.errorMsg">
-            <div class="alert alert-danger">{{ item.errorMsg }}</div>
+        <div class="row show-hide-message" ng-show="itemCreate.errorMsg">
+            <div class="alert alert-danger">{{ itemCreate.errorMsg }}</div>
         </div>
     </div>
 </div>

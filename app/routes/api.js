@@ -432,7 +432,7 @@ module.exports = function(router) {
                 if(!item) {
                     res.json({ success: false, message: 'An item with that Part name was not found' });
                 } else {
-                    res.json({ success: true, item: item, data: item.created });
+                    res.json({ success: true, item: item, date: item.created });
                 }
             });
     });
@@ -485,10 +485,10 @@ module.exports = function(router) {
         item.quanity  = req.body.quanity;
         item.category = req.body.category;
         item.note     = req.body.note;
-        item.url      = req.body.url;
+        item.url      = req.body.url;        
 
         if(item.part == null || item.part == '' || item.quanity == null || item.quanity == '' || item.category == null || item.category == '') {
-            res.json({ success: false, message: 'Part, quanity, category or were not provided.' });
+            res.json({ success: false, message: 'Part, quanity, or category was not provided.' });
         } else {
             User.findOne({username: req.decoded.username }).select('id username')
                 .exec(function(err, user) {
@@ -556,6 +556,66 @@ module.exports = function(router) {
                 }
             });
         });
+    });
+
+    // Item Update Route
+    // http://localhost:8080/api/item/update
+    router.patch('/item/update', function(req, res) {
+        var item = new Item();        
+
+        item.part     = req.body.part;
+        item.quanity  = req.body.quanity;
+        item.category = req.body.category;
+        item.note     = req.body.note;
+        item.url      = req.body.url;
+
+        console.log(req.body);
+
+        if(item.part == null || item.part == '' || item.quanity == null || item.quanity == '' || item.category == null || item.category == '') {
+            res.json({ success: false, message: 'Part, quanity, or category was not provided.' });
+        } else {
+            User.findOne({username: req.decoded.username }).select('id username permission')
+                .exec(function(err, user) {
+                    if(err) throw err;
+
+                    if(!user) {
+                        res.json({ success: false, message: 'User ownership could not be made.'} );
+                    } else {                        
+                        Item.findOne({ part: item.part }).select('part owner')
+                            .exec(function(err, mainItem) {
+                                if((user.username == mainItem.owner.username) || (user.permission == 'admin')) {
+                                        if(err) {
+                                            if(err.errors != null) {
+                                                if(err.errors.part) {
+                                                    res.json({ success: false, message: err.errors.part.message });
+                                                } else if(err.errors.quanity) {
+                                                    res.json({ success: false, message: err.errors.quanity.message });
+                                                } else if(err.errors.category) {
+                                                    res.json({ success: false, message: err.errors.category.message });
+                                                } else if(err.errors.note) {
+                                                    res.json({ success: false, message: err.errors.note.message });
+                                                } else if(err.errors.url) {
+                                                    res.json({ success: false, message: err.errors.url.message });
+                                                } else {
+                                                    res.json({ success: false, message: err });
+                                                }
+                                            }
+                                        } else {     
+                                            Item.findOneAndUpdate({ id: mainItem._id }, { item: item }, function(err) {
+                                                if(err) {
+                                                    res.json({ success: false, message: `\'${mainItem.part}\' could not be updated.` });
+                                                } else {
+                                                    res.json({ success: true, message: `\'${mainItem.part}\' has been updated.` });
+                                                }
+                                            });
+                                        }
+                                } else {
+                                    res.json({ success: false, message: 'Insufficient Permissions' });
+                                }
+                            });
+                    }
+            });      
+        }
     });
 
     // User Permission Route

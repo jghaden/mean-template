@@ -70,8 +70,15 @@ var app = angular.module('mainRoutes', ['ngRoute'])
 
             .when('/items/create', {
                 templateUrl: 'app/views/pages/items/create.html',
-                controller: 'itemCtrl',
-                controllerAs: 'item',
+                controller: 'itemCreateCtrl',
+                controllerAs: 'itemCreate',
+                authenticated: true
+            })
+
+            .when('/items/edit/:part', {
+                templateUrl: 'app/views/pages/items/edit.html',
+                controller: 'itemEditCtrl',
+                controllerAs: 'itemEdit',
                 authenticated: true
             })
 
@@ -98,9 +105,9 @@ var app = angular.module('mainRoutes', ['ngRoute'])
 app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $location, User) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if(next.$$route !== undefined) {
-            // Checks if the end user is logged in
+            // Checks if current page requires authentication
             if(next.$$route.authenticated === true) {
-                // Redirects end user to login page anytime they load a page requiring user authentication
+                // Redirects end user to login page
                 if(!Auth.isLoggedIn()) {
                     event.preventDefault();
                     $location.path('/login');

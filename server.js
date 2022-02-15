@@ -1,5 +1,6 @@
 const express    = require('express');
 const app        = express();
+const cors       = require('cors');
 const morgan     = require('morgan');
 const mongoose   = require('mongoose');
 const bodyParser = require('body-parser');
@@ -10,6 +11,8 @@ const path       = require('path');
 const PORT       = process.env.PORT || 8080;
 
 ///// Middleware
+// Allow Cross-Origin access
+app.use(cors());
 // HTTP request logger for Node.js
 app.use(morgan('dev'));
 // Setup body parsing to grab data from user input (e.g req.body.data)
@@ -23,7 +26,7 @@ app.use('/api', mainRoutes);
 
 ///// Database Connection
 // If this app is deployed on the web, ensure the Mongo database is not on the localhost machine
-mongoose.connect('mongodb://localhost:27017/mean-template', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, function(err) {
+mongoose.connect('mongodb://localhost:27017/mean-template', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }, function(err) {
     if(err) {
         console.log('Not connected to MongoDB: ' + err);
         throw err;
