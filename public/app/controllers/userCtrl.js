@@ -1,4 +1,4 @@
-angular.module('userControllers', ['userServices'])
+angular.module('userController', ['userServices'])
     .controller('regCtrl', function($http, $timeout, $location, User) {
         var app = this;
 
@@ -14,10 +14,6 @@ angular.module('userControllers', ['userServices'])
 
                         if(data.data.success) {
                             app.successMsg = data.data.message;
-
-                            $timeout(function(){
-                                $location.path('/');
-                            }, 2000);
                         } else {
                             app.disabled = false;
                             app.errorMsg = data.data.message;
@@ -93,21 +89,52 @@ angular.module('userControllers', ['userServices'])
         User.getProfile($route.current.params.username)
             .then(function(data) {
                 if(data.data.success) {
-                    app.name       = data.data.user.name;
-                    app.username   = data.data.user.username;
-                    app.email      = data.data.user.email;
-                    app.avatar     = data.data.user.avatar;
+                    app.name       = `${data.data.public_user.nameFirst} ${data.data.public_user.nameLast}`;
+                    app.username   = data.data.public_user.username;
+                    app.email      = data.data.public_user.email;
+                    app.avatar     = data.data.public_user.avatar;
 
-                    app.profession = data.data.user.social.profession;
-                    app.location   = data.data.user.social.location;
-                    app.website    = data.data.user.social.website;
-                    app.github     = data.data.user.social.github;
-                    app.linkedin   = data.data.user.social.linkedin;
+                    app.profession = data.data.public_user.social.profession;
+                    app.location   = data.data.public_user.social.location;
+                    app.website    = data.data.public_user.social.website;
+                    app.github     = data.data.public_user.social.github;
+                    app.linkedin   = data.data.public_user.social.linkedin;
+                    app.about      = data.data.public_user.social.about;
+                    app.topics     = '';
 
-                    app.created = DateFormatted(data.data.user.created);
+                    if(data.data.public_user.social.topics) {
+                        for(var i = 0; i < data.data.public_user.social.topics.length; i++) {
+                            if(i < (data.data.public_user.social.topics.length - 1)) {
+                                app.topics += data.data.public_user.social.topics[i] + ', ';
+                            } else {
+                                app.topics += data.data.public_user.social.topics[i];
+                            }
+                        }
+                    }
+
+                    app.created = DateFormatted(data.data.public_user.created, false, false);
+                    $('#profile-creation-date').attr('title', DateFormatted(data.data.public_user.created));
+
+                    $('.profile-avatar').attr('src', 'users/avatar/' + data.data.public_user._id + '.jpg');
+
+                    StartListeners();
+                    
+                    $('.prop-edit').on('focus', function() {
+                        TextEdit($(this), true, false);
+                    }).on('focusout', function() {
+                        TextEdit($(this), false, false);
+                    });
+
+                    $('.prop-edit-parent').on('focus', function() {
+                        TextEdit($(this).parent(), true, false);
+                    }).on('focusout', function() {
+                        TextEdit($(this).parent(), false, false);
+                    });
                 } else {
                     // Redirect to home path if user profile is not found
                     $location.path('/')
                 }
             });
-    })
+
+        
+    });

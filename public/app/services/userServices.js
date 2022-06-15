@@ -1,53 +1,57 @@
 angular.module('userServices', [])
-    .factory('User', function($http) {
+    .factory('User', ($http) => {
         userFactory = {};
 
-        userFactory.create = function(regData) {
-            return $http.post('/api/user', regData);
+        userFactory.create = (regData) => {
+            return $http.post('/api/users', regData);
+        };
+
+        userFactory.checkEmail = (regData) => {
+            return $http.post('/api/users/check/email', regData);
         };
         
-        userFactory.checkUsername = function(regData) {
-            return $http.post('/api/checkusername', regData);
+        userFactory.checkUsername = (regData) => {
+            return $http.post('/api/users/check/username', regData);
+        };
+
+        userFactory.activateAccount = (token) => {
+            return $http.put(`/api/users/activate/${token}`);
+        };
+
+        userFactory.resendActivatonLink = (username) => {
+            return $http.put('/api/users/resend/activation', username);
         };
         
-        userFactory.checkEmail = function(regData) {
-            return $http.post('/api/checkemail', regData);
+        userFactory.sendUsernameResetLink = (userData) => {
+            return $http.get(`/api/users/reset/username/${userData}`);
         };
 
-        userFactory.activateAccount = function(token) {
-            return $http.put('/api/activate/' + token);
-        };
-        
-        userFactory.checkCredentials = function(loginData) {
-            return $http.post('/api/resend', loginData);
+        userFactory.sendPasswordResetLink = (resetData) => {
+            return $http.put('/api/users/reset/password', resetData);
         };
 
-        userFactory.resendLink = function(username) {
-            return $http.put('/api/resend', username);
-        };
-        
-        userFactory.sendUsername = function(userData) {
-            return $http.get('/api/resetusername/' + userData);
+        userFactory.resetPasswordVerify = (token) => {
+            return $http.get(`/api/users/reset/password/${token}`);
         };
 
-        userFactory.sendPassword = function(resetData) {
-            return $http.put('/api/resetpassword', resetData);
+        userFactory.updatePassword = (regData) => {
+            return $http.put('/api/users/update/password', regData);
         };
 
-        userFactory.resetPassword = function(token) {
-            return $http.get('/api/resetpassword/' + token);
-        };
-
-        userFactory.savePassword = function(regData) {
-            return $http.put('/api/savepassword', regData);
-        };
-
-        userFactory.getProfile = function(username) {
-            return $http.get('/api/profile/' + username);
+        userFactory.getProfile = (username) => {
+            return $http.get(`/api/users/profile/${username}`);
         }
         
-        userFactory.getPermission = function() {
-            return $http.get('/api/permission');
+        userFactory.getPermission = () => {
+            return $http.get('/api/users/permission');
+        };
+
+        userFactory.getUsers = () => {
+            return $http.get('/api/users');
+        };
+        
+        userFactory.deleteUser = (userEmail) => {
+            return $http.delete(`/api/users/${userEmail}`);
         };
 
         return userFactory;

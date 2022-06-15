@@ -1,32 +1,27 @@
-<div class="row d-flex justify-content-center">
-    <div class="col-md-6">
-        <div class="page-header text-center">
-            <h1 class="display-4">Forgot Username</h1>
-        </div>
-        
-        <form name="userForm" ng-submit="username.sendUsername(userData, userForm.$valid);" novalidate>
+<div class="container-form center">
+    <div class="form-page" ng-init="main.setNavTitle('Forgot Username')">
+        <form name="userForm" ng-submit="username.sendUsernameResetLink(userData, userForm.$valid);" novalidate>
             <label><strong>Email:</strong></label>
             <input class="form-control" type="text" name="email" placeholder="Email" ng-model="username.userData.email" ng-disabled="username.disabled" required>
             <br>
             <button class="btn btn-primary" type="submit" ng-disabled="username.disabled">Submit</button>&nbsp
+            
+            <br>
+            <br>
+            
+            <div class="form-messages">
+                <div class="row show-hide-message" ng-show="username.loading">
+                    <div class="alert alert-secondary">Loading...</div>
+                </div>
+                
+                <div class="row show-hide-message" ng-show="username.successMsg">
+                    <div class="alert alert-success">{{ username.successMsg }}</div>
+                </div>
+                
+                <div class="row show-hide-message" ng-show="username.errorMsg">
+                    <div class="alert alert-danger">{{ username.errorMsg }}</div>
+                </div>
+            </div>
         </form>
-        
-        <br>
-        
-        <div class="row show-hide-message" ng-show="username.loading">
-            <div class="alert alert-secondary">Loading...</div>
-        </div>
-        
-        <br>
-        
-        <div class="row show-hide-message" ng-show="username.successMsg">
-            <div class="alert alert-success">{{ username.successMsg }}</div>
-        </div>
-        
-        <br>
-        
-        <div class="row show-hide-message" ng-show="username.errorMsg">
-            <div class="alert alert-danger">{{ username.errorMsg }}</div>
-        </div>
-	</div>
+    </div>
 </div>

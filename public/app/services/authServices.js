@@ -1,16 +1,16 @@
 angular.module('authServices', [])
-    .factory('Auth', function($http, AuthToken) {
+    .factory('Auth', ($http, AuthToken) => {
         var authFactory = {};
 
-        authFactory.login = function(loginData) {
-            return $http.post('/api/authenticate', loginData)
-                .then(function(data) {
+        authFactory.login = (loginData) => {
+            return $http.post('/api/users/auth', loginData)
+                .then((data) => {
                     AuthToken.setToken(data.data.token);
                     return data;
                 });
         }
 
-        authFactory.isLoggedIn = function() {
+        authFactory.isLoggedIn = () => {
             if(AuthToken.getToken()) {
                 return true;
             } else {
@@ -18,25 +18,25 @@ angular.module('authServices', [])
             }
         }
 
-        authFactory.getUser = function() {
+        authFactory.getUser = () => {
             if(AuthToken.getToken()) {
-                return $http.post('/api/me');
+                return $http.post('/api/users/me');
             } else {
                 $q.reject({ message: 'User has no token' });
             }
         }
 
-        authFactory.logout = function() {
+        authFactory.logout = () => {
             AuthToken.setToken();
         }
 
         return authFactory;
     })
 
-    .factory('AuthToken', function($window) {
+    .factory('AuthToken', ($window) => {
         var authTokenFactory = {};
 
-        authTokenFactory.setToken = function(token) {
+        authTokenFactory.setToken = (token) => {
             if(token) {
                 $window.localStorage.setItem('token', token);
             } else {
@@ -44,17 +44,17 @@ angular.module('authServices', [])
             }
         }
 
-        authTokenFactory.getToken = function() {
+        authTokenFactory.getToken = () => {
             return $window.localStorage.getItem('token')
         }
 
         return authTokenFactory;
     })
 
-    .factory('AuthInterceptors', function(AuthToken) {
+    .factory('AuthInterceptors', (AuthToken) => {
         var authInterceptorsFactory = {};
 
-        authInterceptorsFactory.request = function(config) {
+        authInterceptorsFactory.request = (config) => {
             var token = AuthToken.getToken();
 
             if(token) {

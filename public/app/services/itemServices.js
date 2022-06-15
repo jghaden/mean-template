@@ -1,29 +1,25 @@
 angular.module('itemServices', [])
-    .factory('Item', function($http) {
+    .factory('Item', ($http) => {
         itemFactory = {};
 
-        itemFactory.create = function(itemData) {
-            return $http.post('/api/item/create', itemData);
+        itemFactory.create = (itemData) => {
+            return $http.post('/api/items/', itemData);
         };
 
-        itemFactory.checkPart = function(itemData) {
-            return $http.post('/api/checkPart', itemData);
+        itemFactory.checkPart = (itemData) => {
+            return $http.post('/api/items/checkPart', itemData);
         };        
         
-        itemFactory.getItems = function() {
+        itemFactory.getItems = () => {
             return $http.get('/api/items');
         };
         
-        itemFactory.getItem = function(part) {
-            return $http.get('/api/item/' + part);
+        itemFactory.getItem = (part) => {
+            return $http.get(`/api/items/${part}`);
         };
 
-        itemFactory.deleteItem = function(item) {
-            return $http.delete('/api/item/delete/' + item);
-        };
-
-        itemFactory.update = function(itemData) {
-            return $http.patch('/api/item/update', itemData);
+        itemFactory.deleteItem = (item) => {
+            return $http.delete(`/api/items/${item}`);
         };
 
         return itemFactory;

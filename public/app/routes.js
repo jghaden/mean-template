@@ -47,14 +47,14 @@ var app = angular.module('mainRoutes', ['ngRoute'])
                 authenticated: false
             })
 
-            .when('/resetusername', {
+            .when('/forgot/username', {
                 templateUrl: 'app/views/pages/users/reset/username.html',
                 controller: 'usernameCtrl',
                 controllerAs: 'username',
                 authenticated: false
             })
 
-            .when('/resetpassword', {
+            .when('/forgot/password', {
                 templateUrl: 'app/views/pages/users/reset/password.html',
                 controller: 'passwordCtrl',
                 controllerAs: 'password',
@@ -70,15 +70,8 @@ var app = angular.module('mainRoutes', ['ngRoute'])
 
             .when('/items/create', {
                 templateUrl: 'app/views/pages/items/create.html',
-                controller: 'itemCreateCtrl',
-                controllerAs: 'itemCreate',
-                authenticated: true
-            })
-
-            .when('/items/edit/:part', {
-                templateUrl: 'app/views/pages/items/edit.html',
-                controller: 'itemEditCtrl',
-                controllerAs: 'itemEdit',
+                controller: 'itemCtrl',
+                controllerAs: 'item',
                 authenticated: true
             })
 
@@ -94,7 +87,46 @@ var app = angular.module('mainRoutes', ['ngRoute'])
                 controllerAs: 'itemView'
             })
 
-            .otherwise({ redirectTo: '/'});
+            .when('/manage/users', {
+                templateUrl: 'app/views/pages/manage/users/manage.html',
+                controller: 'manageCtrl',
+                controllerAs: 'manage',
+                authenticated: true,
+                permission: ['admin', 'moderator']
+            })
+
+            .when('/manage/users/edit/:id', {
+                templateUrl: 'app/views/pages/manage/users/edit.html',
+                controller: 'editCtrl',
+                controllerAs: 'edit',
+                authenticated: true,
+                permission: ['admin', 'moderator']
+            })
+
+            .when('/projects', {
+                templateUrl: 'app/views/pages/users/projects/dashboard.html',
+                controller: 'projDashboardCtrl',
+                controllerAs: 'projDashboard',
+                authenticated: true
+            })
+
+            .when('/project/:id', {
+                templateUrl: 'app/views/pages/users/projects/view.html',
+                controller: 'projViewCtrl',
+                controllerAs: 'projView',
+                authenticated: true
+            })
+
+            .when('/share/project/:id/:key', {
+                templateUrl: 'app/views/pages/users/projects/view.html',
+                controller: 'projViewCtrl',
+                controllerAs: 'projView',
+                authenticated: true
+            })
+
+            .otherwise({ 
+                redirectTo: '/'
+            });
 
             $locationProvider.html5Mode({
                 enabled: true,
@@ -105,12 +137,14 @@ var app = angular.module('mainRoutes', ['ngRoute'])
 app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $location, User) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if(next.$$route !== undefined) {
-            // Checks if current page requires authentication
+            // Checks if the end user is logged in
             if(next.$$route.authenticated === true) {
-                // Redirects end user to login page
+                // Redirects end user to login page anytime they load a page requiring user authentication
                 if(!Auth.isLoggedIn()) {
                     event.preventDefault();
                     $location.path('/login');
+                } else if (next.$$route.permission) {
+                    
                 }
             } else if(next.$$route.authenticated === false) {
                 if(Auth.isLoggedIn()) {

@@ -1,4 +1,45 @@
-function DateFormatted(date) {
+function setOverlay(el, flag = true, amount = 50) {
+    if(flag) {
+        $('html').addClass('no-scroll');
+        $('#nav, #projnav').addClass('no-mouse')
+        $('body').addClass('no-highlight')
+
+        if(el === '#main') {
+            $('#main, #footer').addClass(['overlay-transition', 'overlay-25']);
+        } else {
+            switch(amount) {
+                case 100:
+                    $(el).addClass('overlay-100'); break;
+                case 75:
+                    $(el).addClass('overlay-75'); break;
+                case 50:
+                    $(el).addClass('overlay-50'); break;
+                case 25:
+                    $(el).addClass('overlay-25'); break;
+                case 0:
+                    $(el).addClass('overlay-0'); break;
+            }
+        }
+    } else {
+        $('html').removeClass('no-scroll');
+        $('#nav, #projnav').removeClass('no-mouse')
+        $('body').removeClass('no-highlight')
+
+        if(el === '#main') {
+            $('#main, #footer').removeClass(['overlay-transition', 'overlay-25']);
+        } else {
+            $(el).removeClass([
+                'overlay-100',
+                'overlay-75',
+                'overlay-50',
+                'overlay-25',
+                'overlay-0'
+            ]);
+        }
+    }
+}
+
+function DateFormatted(date, day = true, time = true) {
     var d = new Date(date),
         minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
         ampm = d.getHours() >= 12 ? 'PM' : 'AM',
@@ -12,7 +53,22 @@ function DateFormatted(date) {
             hours = 12;
         }
 
-        return days[d.getDay()]+'day '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear()+' '+hours+':'+minutes+' '+ampm;
+        return `${day ? days[d.getDay()]+'day' : ''} ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${time ? `${hours}:${minutes} ${ampm}` : ''}`;
+        // return days[d.getDay()]+'day '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear()+' '+hours+':'+minutes+' '+ampm;
+}
+
+function RandomColor() {
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+function RandomGreyColor() {
+    var colors = [
+        '#2e2e2e',
+        '#444444',
+        '#5e5e5e'
+    ];
+
+    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 function RandomFillerText() {
@@ -50,4 +106,79 @@ function RandomFillerText() {
     ]
 
     return text[Math.floor(Math.random() * text.length)];
+}
+
+function SetTitle(text) {
+    document.title = (!text) ? ('Ark') : (text + ' | Ark');
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}  
+
+function StartListeners() {
+    $('[contenteditable="true"]').on('keypress', (e) => {
+        if(e.keyCode == 13) {
+            $(this).trigger('blur');
+            return false;
+        }
+    });
+    
+    $('[contenteditable="true"]').on('paste', (e) => {
+        e.preventDefault();
+    
+        navigator.clipboard.readText().then(text => {
+            document.execCommand("insertHTML", false, text);
+        });
+    });
+}
+
+function TextEdit(el, isEditing, overflow=true) {
+    if(isEditing) {
+        $(el).addClass('text-edit');
+        $('body').addClass('no-scroll');
+        if(overflow)
+        $(el).removeClass('text-overflow');
+    } else {
+        $(el).removeClass('text-edit');
+        $('body').removeClass('no-scroll');
+        if(overflow)
+            $(el).addClass('text-overflow');
+    }
+}
+
+function HoverHandler() {
+    sleep(20).then(() => {
+        $('.proj-folder, .proj-item').on('mouseout', () => {
+            $(this).addClass('mouse-out');
+        });
+
+        $('#video').on('mouseout', () => {
+            $(this).parent().addClass('mouse-out-inner');
+        });
+    })
+}
+
+const downloadToFile = (content, filename, contentType) => {
+    const a = document.createElement('a');
+    const file = new Blob([content], { type: contentType });
+
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+
+    URL.revokeObjectURL(a.href);
+}
+
+function DownloadProject(data, name) {
+    var zip = new JSZip();
+
+    data.items.forEach(item => {
+        zip.file(item.name + '.' + item.type, item._id)
+    });
+
+    zip.generateAsync({ type:'blob' })
+        .then((blob) => {
+            downloadToFile(blob, name + '.zip', 'application/zip');
+        });
 }

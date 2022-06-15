@@ -10,12 +10,12 @@ const saltRounds = 10;
 var nameValidator = [
     validate({
         validator: 'matches',
-        arguments: /^(([a-zA-Z]{2,20})+[ ]+([a-zA-Z]{2,20})+)+$/,
-        message: 'Name must be at least 5 characters, max 40, no special characters or numbers, and must have a space between first and last name.'
+        arguments: /^(([a-zA-Z]{1,16})+)+$/,
+        message: 'Name must be at least 1 character, max 16, no special characters or numbers.'
     }),
     validate({
         validator: 'isLength',
-        arguments: [5, 40],
+        arguments: [1, 16],
         message: 'Name must be between {ARGS[0]} and {ARGS[1]} characters.'
     })
 ];
@@ -60,25 +60,26 @@ var passwordValidator = [
 
 ///// Setting up the Mongoose User model
 var UserSchema = new Schema({
-    name:           { type: String, required: true, validate: nameValidator },
-    username:       { type: String, required: true, unique: true, lowercase: true, validate: usernameValidator },
-    password:       { type: String, required: true, validate: passwordValidator, select: false },
-    email:          { type: String, required: true, unique: true, lowercase: true, validate: emailValidator },
+    activated:      { type: Boolean, required: true, default: false },
     avatar:         { type: String, required: false, default: 'https://picsum.photos/id/818/200' },
     created:        { type: Date, default: Date.now },
-    active:         { type: Boolean, required: true, default: false },
-    permission:     { type: String, required: true, default: 'user'},
-    
-    temporarytoken: { type: String, required: true },
-    resettoken:     { type: String, required: false },
-
+    email:          { type: String, required: true, unique: true, lowercase: true, validate: emailValidator },
+    nameFirst:      { type: String, required: true, validate: nameValidator },
+    nameLast:       { type: String, required: true, validate: nameValidator },
+    username:       { type: String, required: true, unique: true, lowercase: true, validate: usernameValidator },
+    password:       { type: String, required: true, validate: passwordValidator, select: false },
+    permission:     { type: Number, required: true, default: 0 },
+    token_activate: { type: String, required: true },
+    token_reset:    { type: String, required: false },
+    token_secret:   { type: String, required: true },
     social:         {
-        profession:     { type: String, required: false, default: 'N/A' },
-        location:       { type: String, required: false, default: 'N/A' },
+        profession:     { type: String, required: false, default: 'Full Stack Web Developer' },
+        location:       { type: String, required: false, default: 'New York City, NY' },
         
         website:        { type: String, required: false, default: 'N/A' },
         github:         { type: String, required: false, default: 'N/A' },
-        linkedin:       { type: String, required: false, default: 'N/A' }
+        linkedin:       { type: String, required: false, default: 'N/A' },
+        about:          { type: String, required: false, default: 'N/A' }
     }
 });
 /////
@@ -106,7 +107,8 @@ UserSchema.pre('save', function(next) {
 /////
 
 UserSchema.plugin(titlize, {
-    paths: [ 'name' ]
+    paths: [ 'nameFirst', { path: 'nameLast', trim: false } ],
+    trim: true
 });
 
 // Bcrypt hashes user login password and compares to the hash found in the database

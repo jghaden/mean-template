@@ -2,7 +2,7 @@
 angular.module('userApp', 
     [
         'mainRoutes',
-        'userControllers',
+        'userController',
         'userServices',
         'mainController',
         'authServices',

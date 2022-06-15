@@ -1,16 +1,14 @@
-<div class="row d-flex justify-content-center">
-    <div class="col-md-6">
-        <div class="page-header text-center">
-            <h1 class="display-4">User Registration</h1>
-        </div>
-        
+<div class="container-form center">
+    <div class="form-page" ng-init="main.setNavTitle('User Registration')">
         <form name="regForm" ng-submit="register.regUser(regData, regForm.$valid, isConfirmed);" novalidate>
+            <p class="text-secondary text-center">Already have an account? <a href="/login" class="text-primary">Sign in</a></p>
             <div>
-                <label><strong>Name:</strong></label>
+                <label><strong>Full Name:</strong></label>
                 <input class="form-control" type="text" name="name" placeholder="John Doe" ng-model="register.regData.name" required 
                     ng-class="{ 'is-valid': (regForm.name.$valid && !regForm.name.$pristine), 'is-invalid': (!regForm.name.$valid && !regForm.name.$pristine)}"
                     ng-pattern="/^(([a-zA-Z]{2,20})+[ ]+([a-zA-Z]{2,20})+)+$/"
                     ng-minlength="5" ng-maxlength="40"
+                    ng-model-options="{ debounce: 750 }"
                     ng-disabled="register.disabled">
                 <p class="form-text state-invalid" ng-show="(!regForm.name.$pristine && regForm.name.$error.required) || (regForm.$submitted && regForm.name.$error.required)">This field is required</p>
                 <ul class="state-invalid" ng-show="(!regForm.name.$pristine && regForm.name.$error.pattern) || (!regForm.name.$pristine && regForm.name.$error.minlength) || (!regForm.name.$pristine && regForm.name.$error.maxlength)" class="form-text">
@@ -29,6 +27,7 @@
                     ng-pattern="/^.+@.+?\.[a-zA-Z]{2,}$/"
                     ng-change="register.checkEmail(regData);"            
                     ng-minlength="5" ng-maxlength="40"
+                    ng-model-options="{ debounce: 750 }"
                     ng-disabled="register.disabled">
                 <p class="form-text state-invalid" ng-show="(!regForm.email.$pristine && regForm.email.$error.required) || (regForm.$submitted && regForm.email.$error.required)">This field is required</p>
                 <p class="help-block" ng-show="register.emailInvalid" ng-class="{ 'state-valid': (!register.emailInvalid), 'state-invalid': (register.emailInvalid)}">{{ register.emailMsg }}</p>
@@ -46,6 +45,7 @@
                     ng-pattern="/^[a-zA-Z0-9]{3,30}$/"
                     ng-change="register.checkUsername(regData);"
                     ng-minlength="3" ng-maxlength="30"
+                    ng-model-options="{ debounce: 750 }"
                     ng-disabled="register.disabled">
                 <p class="form-text state-invalid" ng-show="(!regForm.username.$pristine && regForm.username.$error.required) || (regForm.$submitted && regForm.username.$error.required)">This field is required</p>
                 <p class="help-block" ng-show="register.usernameInvalid" ng-class="{ 'state-valid': (!register.usernameInvalid), 'state-invalid': (register.usernameInvalid)}">{{ register.usernameMsg }}</p>
@@ -61,6 +61,7 @@
                     ng-class="{ 'is-valid': (regForm.password.$valid && !regForm.password.$pristine), 'is-invalid': (!regForm.password.$valid && !regForm.password.$pristine)}"
                     ng-pattern="/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,256}$/"
                     ng-minlength="8" ng-maxlength="256"
+                    ng-model-options="{ debounce: 750 }"
                     ng-disabled="register.disabled">
                 <p class="form-text state-invalid" ng-show="(!regForm.password.$pristine && regForm.password.$error.required) || (regForm.$submitted && regForm.password.$error.required)">This field is required</p>
                 <ul class="state-invalid" ng-show="(!regForm.password.$pristine && regForm.password.$error.pattern) || (!regForm.password.$pristine && regForm.password.$error.minlength) || (!regForm.password.$pristine && regForm.password.$error.maxlength)" class="form-text">
@@ -76,32 +77,30 @@
                 <label><strong>Confirm Password:</strong></label>
                 <input class="form-control" type="password" name="passwordConfirm" placeholder="**********" ng-model="confirm" match={{[password]}} ng-change="register.regData.password = confirm" required
                     ng-class="{ 'is-valid': (isConfirmed && !regForm.passwordConfirm.$error.required), 'is-invalid': (!isConfirmed && !regForm.passwordConfirm.$error.required) || (regForm.passwordConfirm.$error.required && !regForm.passwordConfirm.$pristine)}"
+                    ng-model-options="{ debounce: 750 }"
                     ng-disabled="register.disabled">
                     <p class="form-text state-invalid" ng-show="(!regForm.passwordConfirm.$pristine && regForm.passwordConfirm.$error.required) || (regForm.$submitted && regForm.passwordConfirm.$error.required)">This field is required</p>
                 <p class="form-text state-invalid" ng-show="(!isConfirmed && !regForm.passwordConfirm.$pristine && regForm.password.$valid)">Passwords do not match</p>
             </div>
             <br>
             <button class="btn btn-primary" type="submit" ng-disabled="register.disabled">Register</button>
+            
+            <br>
+            <br>
+
+            <div class="form-messages">
+                <div class="row show-hide-message" ng-show="register.loading">
+                    <div class="alert alert-secondary">Loading...</div>
+                </div>
+                
+                <div class="row show-hide-message" ng-show="register.successMsg">
+                    <div class="alert alert-success">{{ register.successMsg }}</div>
+                </div>
+                
+                <div class="row show-hide-message" ng-show="register.errorMsg">
+                    <div class="alert alert-danger">{{ register.errorMsg }}</div>
+                </div>
+            </div>
         </form>
-        <br>
-        
-        <br>
-        <br>
-        
-        <div class="row show-hide-message" ng-show="register.loading">
-            <div class="alert alert-secondary">Loading...</div>
-        </div>
-        
-        <br>
-        
-        <div class="row show-hide-message" ng-show="register.successMsg">
-            <div class="alert alert-success">{{ register.successMsg }}</div>
-        </div>
-        
-        <br>
-        
-        <div class="row show-hide-message" ng-show="register.errorMsg">
-            <div class="alert alert-danger">{{ register.errorMsg }}</div>
-        </div>
     </div>
 </div>

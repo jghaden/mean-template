@@ -27,7 +27,7 @@ angular.module('emailController', ['userServices'])
             app.successMsg = false;
             app.disabled = true;
 
-            User.checkCredentials(app.loginData)
+            User.resendActivationLink(app.loginData)
                 .then(function(data) {
                     if(data.data.success) {
                         User.resendLink(app.loginData)
@@ -56,7 +56,7 @@ angular.module('emailController', ['userServices'])
             app.disabled = true;
 
             if(valid) {
-                User.sendUsername(app.userData.email)
+                User.sendUsernameResetLink(app.userData.email)
                     .then(function(data) {
                         app.loading = false;
 
@@ -79,13 +79,13 @@ angular.module('emailController', ['userServices'])
     .controller('passwordCtrl', function(User) {
         app = this;
         
-        app.sendPassword = function(resetData, valid) {
+        app.sendPasswordResetLink = function(resetData, valid) {
             app.errorMsg = false;
             app.loading = true;
             app.disabled = true;
 
             if(valid) {
-                User.sendPassword(app.resetData)
+                User.sendPasswordResetLink(app.resetData)
                     .then(function(data) {
                         app.loading = false;
 
@@ -109,26 +109,26 @@ angular.module('emailController', ['userServices'])
         app = this;
         app.hide = true;
 
-        User.resetPassword($routeParams.token)
+        User.resetPasswordVerify($routeParams.token)
             .then(function(data) {
                 if(data.data.success) {
                     app.hide = false;
                     app.successMsg = 'Enter a new password';
-                    $scope.username = data.data.user.username;
+                    $scope.email = data.data.user.email;
                 } else {
                     app.errorMsg = data.data.message;
                 }
         });
 
-        app.savePassword = function(regData, valid, isConfirmed) {
+        app.updatePassword = function(regData, valid, isConfirmed) {
             app.errorMsg = false;
             app.loading = true;
             app.disabled = true;
             
             if(valid && isConfirmed) {
-                app.regData.username = $scope.username;
+                app.regData.email = $scope.email;
 
-                User.savePassword(app.regData)
+                User.updatePassword(app.regData)
                     .then(function(data) {
                         if(data.data.success) {
                             app.successMsg = data.data.message;
